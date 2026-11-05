@@ -2,8 +2,9 @@
   "name": "floreria-muniz-web",
   "version": "1.0.0",
   "description": "Sitio web oficial de Florería Muñiz",
+  "main": "server.js",
   "scripts": {
-    "build": "echo Build complete",
-    "dev": "node dev-server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   }
 }
