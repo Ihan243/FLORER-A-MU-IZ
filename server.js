@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Statically read essential files so Vercel bundler packages them
+// Read files into memory so Vercel bundler packages them
 const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'));
 
 let codeHtml = indexHtml;
@@ -17,8 +17,8 @@ try {
   screenPng = fs.readFileSync(path.join(__dirname, 'screen.png'));
 } catch (e) {}
 
-const server = http.createServer((req, res) => {
-  const url = req.url.split('?')[0];
+function handler(req, res) {
+  const url = (req.url || '/').split('?')[0];
 
   if (url === '/screen.png' && screenPng) {
     res.writeHead(200, {
@@ -42,11 +42,15 @@ const server = http.createServer((req, res) => {
     'Cache-Control': 'public, max-age=3600',
   });
   res.end(indexHtml);
-});
+}
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🌸 Servidor Florería Muñiz activo en puerto ${PORT}`);
-});
+// Local standalone server execution
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  http.createServer(handler).listen(PORT, '0.0.0.0', () => {
+    console.log(`🌸 Florería Muñiz activo en http://localhost:${PORT}`);
+  });
+}
 
-module.exports = server;
+// Vercel Serverless Function export
+module.exports = handler;
