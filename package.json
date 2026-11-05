@@ -1,0 +1,9 @@
+{
+  "name": "floreria-muniz-web",
+  "version": "1.0.0",
+  "description": "Sitio web oficial de Florería Muñiz",
+  "scripts": {
+    "build": "echo Build complete",
+    "dev": "node dev-server.js"
+  }
+}
