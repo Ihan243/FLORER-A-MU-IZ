@@ -1,6 +1,8 @@
 node_modules/
 .vercel/
+dev-server.js
+package.json
+package-lock.json
+push.bat
 .DS_Store
 Thumbs.db
-
-.vercel
