@@ -2,41 +2,51 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Read files into memory so Vercel bundler packages them
+const MIME_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+};
+
+// Cache index.html in memory
 const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'));
 
-let codeHtml = indexHtml;
-try {
-  codeHtml = fs.readFileSync(path.join(__dirname, 'code.html'));
-} catch (e) {
-  codeHtml = indexHtml;
-}
-
-let screenPng = null;
-try {
-  screenPng = fs.readFileSync(path.join(__dirname, 'screen.png'));
-} catch (e) {}
-
 function handler(req, res) {
-  const url = (req.url || '/').split('?')[0];
-
-  if (url === '/screen.png' && screenPng) {
-    res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Cache-Control': 'public, max-age=86400',
-    });
-    return res.end(screenPng);
-  }
-
-  if (url === '/code' || url === '/code.html') {
+  const cleanUrl = decodeURIComponent((req.url || '/').split('?')[0]);
+  
+  if (cleanUrl === '/' || cleanUrl === '/index.html') {
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, max-age=3600',
     });
-    return res.end(codeHtml);
+    return res.end(indexHtml);
   }
 
-  // Serve index.html for all other routes
+  // Attempt to serve static file from disk
+  const safePath = path.normalize(cleanUrl).replace(/^(\.\.[\/\\])+/, '');
+  const filePath = path.join(__dirname, safePath);
+
+  try {
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      const ext = path.extname(filePath).toLowerCase();
+      const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=86400',
+      });
+      return fs.createReadStream(filePath).pipe(res);
+    }
+  } catch (err) {}
+
+  // Fallback to index.html for SPA/anchor routes
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'public, max-age=3600',
@@ -44,7 +54,7 @@ function handler(req, res) {
   res.end(indexHtml);
 }
 
-// Local standalone server execution
+// Standalone execution for localhost
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   http.createServer(handler).listen(PORT, '0.0.0.0', () => {
@@ -52,5 +62,4 @@ if (require.main === module) {
   });
 }
 
-// Vercel Serverless Function export
 module.exports = handler;
