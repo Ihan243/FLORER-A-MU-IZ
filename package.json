@@ -2,16 +2,13 @@
   "name": "floreria-muniz-web",
   "version": "1.0.0",
   "description": "Sitio web oficial y plataforma de pedidos de Florería Muñiz",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node dev-server.js"
   },
   "keywords": [
     "floreria",
     "ameca",
-    "floreriamuniz",
-    "rosas"
+    "floreriamuniz"
   ],
   "author": "Florería Muñiz",
   "license": "ISC"
