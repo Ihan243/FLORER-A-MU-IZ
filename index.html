@@ -224,6 +224,12 @@ function renderCatalog(){
   grid.innerHTML=products.map((product)=>
     '<article class="product"><div class="product-photo"><img loading="lazy" decoding="async" src="'+escapeHtml(product.image)+'" alt="'+escapeHtml(product.name)+'"><span class="badge">'+escapeHtml(product.category)+'</span></div><div class="product-body"><h3>'+escapeHtml(product.name)+'</h3><p>'+escapeHtml(product.description)+'</p>'+(product.note?'<p class="product-note">'+escapeHtml(product.note)+'</p>':'')+'<span class="price"><small>PRECIO CATÁLOGO 2026</small>'+money(product.price)+'</span><button class="btn btn-primary add-product" type="button" data-product="'+escapeHtml(product.id)+'">Agregar a cotización</button></div></article>'
   ).join("");
+  document.querySelectorAll(".product-photo img").forEach((image)=>{
+    image.addEventListener("error",()=>{
+      const filename=image.getAttribute("src").split("/").pop();
+      image.src="https://raw.githubusercontent.com/Ihan243/FLORER-A-MU-IZ/main/assets/catalogo/"+encodeURIComponent(filename);
+    },{once:true});
+  });
   document.querySelectorAll(".add-product").forEach((button)=>button.addEventListener("click",()=>addProduct(button.dataset.product)));
 }
 function addProduct(productId){
