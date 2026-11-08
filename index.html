@@ -57,6 +57,11 @@
 @media(max-width:560px){.location-section{padding:38px 0}.location-detail-grid{grid-template-columns:1fr}.map-card{min-height:270px}.footer-grid{grid-template-columns:1fr 1fr;gap:22px 15px}.footer-column h3{font-size:1.1rem}.footer-bottom{align-items:flex-start;flex-direction:column}.floating-whatsapp,.floating-quote{right:12px}.floating-whatsapp{bottom:12px}.floating-quote{bottom:68px}}
 
 /* Location and footer */
+
+.brand-logo{display:block;width:154px;height:84px;object-fit:contain;background:var(--wine);border-radius:12px;padding:4px 7px}
+.footer-logo{display:block;width:170px;height:94px;object-fit:contain;background:var(--wine);border-radius:12px;padding:5px 8px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:650px){.brand-logo{width:124px;height:68px}.footer-logo{width:150px;height:82px}}
 </style>
 </head>
 <body>
@@ -78,7 +83,7 @@ const PRODUCTS = [{"id":"ramos-01","name":"Referencia #01","category":"Ramos buc
 <div class="topline">✿ Flores frescas y detalles hechos con cariño · Ameca, Jalisco</div>
 <header class="header">
   <div class="wrap nav">
-    <a class="brand" href="#inicio" aria-label="Inicio Florería Muñiz"><span class="brand-mark">✿</span><span><span class="brand-name" id="brand-name">Florería Muñiz</span><br><span class="brand-sub">Ameca, Jalisco</span></span></a>
+    <a class="brand" href="#inicio" aria-label="Inicio Florería Muñiz"><img class="brand-logo" src="/assets/floreria-muniz-logo.svg" alt="" aria-hidden="true"><span class="sr-only" id="brand-name">Florería Muñiz</span></a>
     <nav class="navlinks" aria-label="Navegación principal">
       <button class="active" data-view="home">Inicio</button><button data-view="catalog">Catálogo</button><button data-view="quote">Cotizador <span id="cart-count"></span></button>
     </nav>
@@ -154,7 +159,7 @@ const PRODUCTS = [{"id":"ramos-01","name":"Referencia #01","category":"Ramos buc
 </div></section>
 </main>
 <footer class="site-footer"><div class="wrap"><div class="footer-grid">
-<div class="footer-column"><div class="footer-brand"><span class="brand-mark">✿</span><div><strong id="footer-name">Florería Muñiz</strong><br><span class="brand-sub">Florería en Ameca</span></div></div><p>Arte floral y diseño botánico artesanal. Arreglos para celebrar los momentos más entrañables en Ameca y la región Valles de Jalisco.</p><div class="social-links"><a aria-label="Facebook" href="https://www.facebook.com/floreriamuniz/" target="_blank" rel="noopener">f</a><a aria-label="Instagram" href="https://www.instagram.com/floreriamuniz/" target="_blank" rel="noopener">◎</a><a aria-label="WhatsApp" id="footer-whatsapp" href="https://wa.me/523757561827" target="_blank" rel="noopener">▣</a></div></div>
+<div class="footer-column"><div class="footer-brand"><img class="footer-logo" src="/assets/floreria-muniz-logo.svg" alt="Logotipo de Florería Muñiz"><span class="sr-only" id="footer-name">Florería Muñiz</span></div><p>Arte floral y diseño botánico artesanal. Arreglos para celebrar los momentos más entrañables en Ameca y la región Valles de Jalisco.</p><div class="social-links"><a aria-label="Facebook" href="https://www.facebook.com/floreriamuniz/" target="_blank" rel="noopener">f</a><a aria-label="Instagram" href="https://www.instagram.com/floreriamuniz/" target="_blank" rel="noopener">◎</a><a aria-label="WhatsApp" id="footer-whatsapp" href="https://wa.me/523757561827" target="_blank" rel="noopener">▣</a></div></div>
 <div class="footer-column"><h3>Navegación</h3><div class="footer-links"><button data-view="home">Inicio</button><button data-view="catalog">Catálogo de temporada</button><button data-view="quote">Cotizador</button><a href="#contacto">Ubicación y entregas</a><a href="aviso-privacidad.html">Aviso de Privacidad</a></div></div>
 <div class="footer-column"><h3>Horarios de Atelier</h3><p><strong>Lunes a Sábado</strong><br><span id="footer-hours-week">8:00 AM – 8:00 PM</span></p><p><strong>Domingos</strong><br><span id="footer-hours-sunday">9:00 AM – 3:00 PM</span></p><p>🌿 Servicio de envíos programados y pedidos especiales para eventos.</p></div>
 <div class="footer-column"><h3>Atelier físico</h3><p id="footer-address">Avenida Patria Poniente #200-B<br>(Al lado del Pollo Bronco y enfrente de la Secundaria #1)<br>Ameca, Jalisco, México</p><div class="footer-links"><a id="footer-maps-link" href="#" target="_blank" rel="noopener">⌖ Abrir en Google Maps</a><a id="footer-waze-link" href="#" target="_blank" rel="noopener">△ Cómo llegar en Waze</a><a id="footer-phone-link" href="tel:+523757561827">♧ +52 375 756 1827</a></div></div>
