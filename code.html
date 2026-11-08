@@ -348,7 +348,7 @@ document.getElementById("quote-form").addEventListener("submit",(event)=>{
   event.preventDefault();
   if(!validateForm())return;
   const url="https://wa.me/"+BUSINESS_INFO.whatsapp+"?text="+encodeURIComponent(makeWhatsAppMessage());
-  window.open(url,"_blank","noopener,noreferrer");
+  window.location.assign(url);
 });
 applyBusinessInfo();
 updateCounts();
