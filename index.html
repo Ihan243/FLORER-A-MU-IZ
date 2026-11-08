@@ -190,7 +190,7 @@ function validateForm(){
   const name=document.getElementById("customer-name").value.trim();
   const address=document.getElementById("delivery-address").value.trim();
   const consent=document.getElementById("privacy-consent").checked;
-  const valid=hasProducts && !!mode && !!name && (mode!=="home" || !!address) && consent;
+  const valid=hasProducts && !!mode && !!name && (mode!=="home" || !!address || !!currentLocationUrl) && consent;
   document.getElementById("send-button").disabled=!valid;
   return valid;
 }
@@ -199,11 +199,11 @@ function makeWhatsAppMessage(){
   const total=[...cart.entries()].reduce((sum,[id,item])=>{const p=PRODUCTS.find((product)=>product.id===id);return sum+(p?p.price*item.quantity:0);},0);
   const lines=["Hola, quiero solicitar una cotización:","","🛍️ Productos:",...rows,"","💰 Total estimado: "+money(total)];
   if(deliveryType()==="home"){
-    lines.push("","📦 Entrega: A domicilio","📍 Dirección: "+document.getElementById("delivery-address").value.trim());
+    lines.push("","📦 Entrega: A domicilio","📍 Dirección: "+(document.getElementById("delivery-address").value.trim() || "Ubicación actual"));
     if(currentLocationUrl) lines.push("🗺️ Ubicación: "+currentLocationUrl);
     lines.push("🚚 Costo de envío: por confirmar");
   } else {
-    lines.push("","📦 Entrega: Recoge en el local ("+BUSINESS_INFO.address+")","🕒 Horario: "+BUSINESS_INFO.hours);
+    lines.push("","📦 Entrega: Recoge en el local ("+BUSINESS_INFO.address+")");
   }
   lines.push("","👤 Nombre: "+document.getElementById("customer-name").value.trim());
   const phone=document.getElementById("customer-phone").value.trim();
