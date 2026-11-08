@@ -300,7 +300,9 @@ function deliveryType(){const selected=document.querySelector('input[name="deliv
 function makeWhatsAppMessage(){
   const rows=[...cart.entries()].map(([id,item])=>{
     const p=PRODUCTS.find((product)=>product.id===id);
-    return p?"- "+p.name+" × "+item.quantity+" — Unitario: "+money(p.price)+" — Subtotal: "+money(p.price*item.quantity)+(p.note?" · "+p.note:""):"";
+    if(!p)return "";
+    const priceLine="- "+p.category+" × "+item.quantity+" — Unitario: "+money(p.price)+" — Subtotal: "+money(p.price*item.quantity)+(p.note?" · "+p.note:"");
+    return priceLine+(p.image?"\n  Foto del producto: "+p.image:"");
   }).filter(Boolean);
   const subtotal=subtotalProducts();
   const lines=["Hola, quiero solicitar una cotización:","","Productos:",...rows,"","Subtotal estimado de productos: "+money(subtotal)];
