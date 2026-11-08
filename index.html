@@ -185,6 +185,9 @@ function applyBusinessInfo(){
   const mapsUrl = "https://maps.google.com/?q=" + encodedAddress;
   const wazeUrl = "https://waze.com/ul?q=" + encodedAddress;
   document.getElementById("location-address").textContent = BUSINESS_INFO.address.split(" (")[0];
+  document.getElementById("footer-address").textContent = BUSINESS_INFO.address + ", " + BUSINESS_INFO.city;
+  document.getElementById("map-address-label").textContent = BUSINESS_INFO.address.split(" (")[0] + ", Ameca";
+  document.getElementById("footer-copy-name").textContent = BUSINESS_INFO.name;
   document.getElementById("hours-week").textContent = BUSINESS_INFO.scheduleWeek;
   document.getElementById("hours-sunday").textContent = BUSINESS_INFO.scheduleSunday;
   document.getElementById("footer-hours-week").textContent = BUSINESS_INFO.scheduleWeek;
