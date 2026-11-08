@@ -25,7 +25,7 @@ function handler(req, res) {
   if (cleanUrl === '/' || cleanUrl === '/index.html') {
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
     });
     return res.end(indexHtml);
   }
@@ -49,7 +49,7 @@ function handler(req, res) {
   // Fallback to index.html for SPA/anchor routes
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=3600',
+    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
   });
   res.end(indexHtml);
 }
