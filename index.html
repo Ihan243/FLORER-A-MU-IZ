@@ -295,23 +295,23 @@ function deliveryType(){const selected=document.querySelector('input[name="deliv
 function makeWhatsAppMessage(){
   const rows=[...cart.entries()].map(([id,item])=>{const p=PRODUCTS.find((product)=>product.id===id);return p?"- "+p.name+" × "+item.quantity+" — Unitario: "+money(p.price)+" — Subtotal: "+money(p.price*item.quantity)+(p.note?" · "+p.note:""):"";}).filter(Boolean);
   const subtotal=subtotalProducts();
-  const lines=["Hola, quiero solicitar una cotización:","","🛍️ Productos:",...rows,"","💰 Subtotal estimado de productos: "+money(subtotal)];
+  const lines=["Hola, quiero solicitar una cotización:","","Productos:",...rows,"", "Subtotal estimado de productos: "+money(subtotal)];
   if(deliveryType()==="home"){
     const estimate=shippingEstimate();
-    lines.push("","📦 Entrega: A domicilio","📍 Localidad / municipio: "+document.getElementById("delivery-city").value.trim(),"📍 Dirección: "+(document.getElementById("delivery-address").value.trim()||"Ubicación actual"));
-    if(currentLocationUrl)lines.push("🗺️ Ubicación: "+currentLocationUrl);
-    lines.push("🚚 Costo de envío: "+(estimate.label.includes("gratis")?"Gratis según Catálogo 2026; vigencia por confirmar.":"Por confirmar."));
-    lines.push("ℹ️ Si no se encuentra a la persona, un segundo intento puede generar un cargo.");
+    lines.push(","Entrega: A domicilio","Localidad / municipio: "+document.getElementById("delivery-city").value.trim(), "Dirección: "+(document.getElementById("delivery-address").value.trim()||"Ubicación actual"));
+    if(currentLocationUrl)lines.push( "Ubicación: "+currentLocationUrl);
+    lines.push( "Costo de envío: "+(estimate.label.includes("gratis")?"Gratis según Catálogo 2026; vigencia por confirmar.":"Por confirmar."));
+    lines.push("Nota: Si no se encuentra a la persona, un segundo intento puede generar un cargo.");
   }else{
-    lines.push("","📦 Entrega: Recoger en el local ("+BUSINESS_INFO.address+")","🕒 Horario: "+BUSINESS_INFO.hours);
+    lines.push("","Entrega: Recoger en el local ("+BUSINESS_INFO.address+")", "Horario: "+BUSINESS_INFO.hours);
   }
-  lines.push("","👤 Nombre: "+document.getElementById("customer-name").value.trim());
+  lines.push(","Nombre: "+document.getElementById("customer-name").value.trim());
   const phone=document.getElementById("customer-phone").value.trim();
   const requestedDate=document.getElementById("requested-date").value;
   const notes=document.getElementById("customer-notes").value.trim();
-  if(phone)lines.push("📞 Teléfono: "+phone);
-  if(requestedDate)lines.push("📅 Fecha y hora deseadas: "+requestedDate);
-  if(notes)lines.push("📝 Notas: "+notes);
+  if(phone)lines.push( "Teléfono: "+phone);
+  if(requestedDate)lines.push( "Fecha y hora deseadas: "+requestedDate);
+  if(notes)lines.push( "Notas: "+notes);
   lines.push("","La disponibilidad, el precio final y la entrega deben confirmarse con la florería. Los precios corresponden al catálogo 2026 y pueden cambiar.");
   return lines.join("\n");
 }
