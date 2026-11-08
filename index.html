@@ -290,7 +290,7 @@ function makeWhatsAppMessage(){
   const lines=["Hola, quiero solicitar una cotización:","","🛍️ Productos:",...rows,"","💰 Subtotal estimado de productos: "+money(subtotal)];
   if(deliveryType()==="home"){
     const estimate=shippingEstimate();
-    lines.push("","📦 Entrega: A domicilio","📍 Localidad / municipio: "+document.getElementById("delivery-city").value.trim(),"📍 Dirección: "+document.getElementById("delivery-address").value.trim());
+    lines.push("","📦 Entrega: A domicilio","📍 Localidad / municipio: "+document.getElementById("delivery-city").value.trim(),"📍 Dirección: "+(document.getElementById("delivery-address").value.trim()||"Ubicación actual"));
     if(currentLocationUrl)lines.push("🗺️ Ubicación: "+currentLocationUrl);
     lines.push("🚚 Costo de envío: "+(estimate.label.includes("gratis")?"Gratis según Catálogo 2026; vigencia por confirmar.":"Por confirmar."));
     lines.push("ℹ️ Si no se encuentra a la persona, un segundo intento puede generar un cargo.");
@@ -322,7 +322,7 @@ document.querySelectorAll('input[name="delivery"]').forEach((radio)=>radio.addEv
   updateShippingSummary();
   validateForm();
 }));
-["customer-name","customer-phone","customer-notes","delivery-address","delivery-city","requested-date","privacy-consent"].forEach((id)=>document.getElementById(id).addEventListener("input",validateForm));
+["customer-name","customer-phone","customer-notes","delivery-address","delivery-city","requested-date","privacy-consent"].forEach((id)=>document.getElementById(id).addEventListener("input",()=>{updateShippingSummary();validateForm();}));
 document.getElementById("privacy-consent").addEventListener("change",validateForm);
 document.getElementById("location-button").addEventListener("click",()=>{
   const status=document.getElementById("location-status");
@@ -331,9 +331,8 @@ document.getElementById("location-button").addEventListener("click",()=>{
   navigator.geolocation.getCurrentPosition((position)=>{
     const lat=position.coords.latitude,lon=position.coords.longitude;
     currentLocationUrl="https://maps.google.com/?q="+lat+","+lon;
-    const address=document.getElementById("delivery-address");
-    address.value=(address.value.trim()?address.value.trim()+" ":"")+"Ubicación: "+currentLocationUrl;
-    status.textContent="Enlace de ubicación agregado al campo de dirección.";
+    status.textContent="Enlace listo. Escribe también la dirección, colonia y referencias.";
+    updateShippingSummary();
     validateForm();
   },()=>{status.textContent="No se obtuvo la ubicación. Puedes escribir la dirección manualmente.";},{enableHighAccuracy:true,timeout:10000});
 });
