@@ -271,6 +271,7 @@ async function loadPublicCatalogFromSupabase(){
       image:product.image_url||"/assets/catalogo/001.jpg",note:product.price_note||""
     }));
     renderCatalog();
+    if(activeView==="quote")renderQuote();
   }catch(error){console.warn("No se pudo cargar el catálogo de Supabase. Se conserva el catálogo de respaldo.",error);}
 }
 function applyBusinessInfo(){
