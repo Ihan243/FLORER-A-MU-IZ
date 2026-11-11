@@ -1,0 +1,18 @@
+# Florería Muñiz
+
+> Florería en Ameca, Jalisco, México. Consulta ramos, arreglos y flores, y solicita una cotización por WhatsApp.
+
+Florería Muñiz atiende pedidos para ocasiones especiales, con opciones de recolección en el local y entrega a domicilio. La disponibilidad y el precio final de cada producto se confirman con la florería.
+
+## Información del negocio
+
+- Ubicación: Avenida Patria Poniente #200-B, al lado del Pollo Bronco y frente a la Secundaria #1, Ameca, Jalisco, México.
+- Horario: lunes a sábado, 8:00 AM–8:00 PM; domingos, 9:00 AM–3:00 PM.
+- WhatsApp: +52 375 756 1827.
+- Precios: los precios mostrados en el catálogo pueden cambiar y deben confirmarse.
+
+## Enlaces
+
+- [Sitio web](https://florer-a-mu-iz.vercel.app/): portada y acceso al catálogo y cotizador.
+- [Aviso de Privacidad](https://florer-a-mu-iz.vercel.app/aviso-privacidad.html): información sobre el uso de datos personales.
+- [WhatsApp](https://wa.me/523757561827): contacto para cotizaciones.

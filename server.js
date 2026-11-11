@@ -13,6 +13,7 @@ const MIME_TYPES = {
   '.webp': 'image/webp',
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
+  '.txt': 'text/plain; charset=utf-8',
   '.ico': 'image/x-icon',
 };
 
