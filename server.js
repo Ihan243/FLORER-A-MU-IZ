@@ -32,13 +32,27 @@ function handler(req, res) {
     return res.end(indexHtml);
   }
 
-  // Serve crawler rules as plain text instead of the SPA fallback.
-  if (cleanUrl === '/robots.txt') {
+  const machineReadableFiles = {
+    '/robots.txt': {
+      contentType: 'text/plain; charset=utf-8',
+      body: 'User-agent: *\\nAllow: /\\n',
+    },
+    '/llms.txt': {
+      contentType: 'text/plain; charset=utf-8',
+      body: "# Florería Muñiz\n\n> Florería en Ameca, Jalisco, México. Consulta ramos, arreglos y flores, y solicita una cotización por WhatsApp.\n\nFlorería Muñiz atiende pedidos para ocasiones especiales, con opciones de recolección en el local y entrega a domicilio. La disponibilidad y el precio final de cada producto se confirman con la florería.\n\n## Información del negocio\n\n- Ubicación: Avenida Patria Poniente #200-B, al lado del Pollo Bronco y frente a la Secundaria #1, Ameca, Jalisco, México.\n- Horario: lunes a sábado, 8:00 AM–8:00 PM; domingos, 9:00 AM–3:00 PM.\n- WhatsApp: +52 375 756 1827.\n- Precios: los precios mostrados en el catálogo pueden cambiar y deben confirmarse.\n\n## Enlaces\n\n- [Sitio web](https://florer-a-mu-iz.vercel.app/): portada y acceso al catálogo y cotizador.\n- [Aviso de Privacidad](https://florer-a-mu-iz.vercel.app/aviso-privacidad.html): información sobre el uso de datos personales.\n- [WhatsApp](https://wa.me/523757561827): contacto para cotizaciones.\n",
+    },
+    '/ai-catalog.json': {
+      contentType: 'application/json; charset=utf-8',
+      body: "{\n  \"specVersion\": \"1.0\",\n  \"host\": {\n    \"displayName\": \"Florería Muñiz\",\n    \"documentationUrl\": \"https://florer-a-mu-iz.vercel.app/\"\n  },\n  \"entries\": []\n}\n",
+    },
+  };
+  const machineReadableFile = machineReadableFiles[cleanUrl];
+  if (machineReadableFile) {
     res.writeHead(200, {
-      'Content-Type': 'text/plain; charset=utf-8',
+      'Content-Type': machineReadableFile.contentType,
       'Cache-Control': 'public, max-age=86400',
     });
-    return res.end('User-agent: *\nAllow: /\n');
+    return res.end(machineReadableFile.body);
   }
 
   // Always serve the full privacy notice at its public URL.
