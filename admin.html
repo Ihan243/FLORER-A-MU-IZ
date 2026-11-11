@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#651028">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel administrativo | Florería Muñiz</title>
+<style>
+:root{--wine:#651028;--wine-dark:#4c0c1c;--rose:#f7e7e9;--cream:#fffaf7;--paper:#fff;--ink:#292323;--muted:#706466;--green:#496640;--line:#eadcda;--shadow:0 12px 34px #39101b10}
+*{box-sizing:border-box}body{margin:0;background:#f8f3f0;color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:var(--wine);color:#fff;padding:15px max(20px,calc((100% - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:15px}.top strong{font:600 1.25rem Georgia,serif}.top a{color:white}.wrap{width:min(1200px,calc(100% - 32px));margin:26px auto 60px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}.card h2{font:600 1.35rem Georgia,serif;color:var(--wine);margin:0 0 16px}.muted{color:var(--muted)}.hint{font-size:.85rem;color:var(--muted)}.status{padding:12px 15px;border-radius:12px;background:#f6f3e9;color:#564b31;margin:14px 0}.status.error{background:#fae9e8;color:#7c1f26}.status.ok{background:#eaf4e6;color:#345b30}.button{border:0;border-radius:999px;padding:11px 17px;font-weight:700}.primary{background:var(--wine);color:white}.primary:hover{background:var(--wine-dark)}.light{background:var(--rose);color:var(--wine)}.small{font-size:.84rem;padding:7px 12px}.login{max-width:560px;margin:60px auto;text-align:center}.login .button{width:100%;margin-top:14px}.grid{display:grid;gap:18px}.kpis{grid-template-columns:repeat(3,1fr)}.kpi strong{display:block;color:var(--wine);font-size:1.7rem;margin-top:7px}.two{grid-template-columns:1fr 1fr}.field{display:grid;gap:5px;margin-bottom:12px}.field label{font-weight:700;font-size:.9rem}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}.field textarea{min-height:76px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px;margin:10px 0}.check input{accent-color:var(--wine)}.actions{display:flex;gap:8px;flex-wrap:wrap}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:.77rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.thumb{width:48px;height:48px;object-fit:cover;border-radius:8px;background:var(--rose)}.top-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0}.bar-wrap{height:8px;background:#f2e7e7;border-radius:99px;overflow:hidden;margin-top:4px}.bar{height:100%;background:var(--wine);border-radius:99px}.order-line{display:grid;grid-template-columns:1fr 100px auto;gap:8px;margin-bottom:8px}.line-remove{border:1px solid var(--line);background:#fff;border-radius:8px;padding:0 10px;color:var(--wine)}.right{display:flex;gap:9px;align-items:center}.hidden{display:none!important}.footer-note{text-align:center;color:var(--muted);font-size:.84rem;margin-top:24px}
+@media(max-width:760px){.wrap{width:calc(100% - 22px);margin-top:14px}.card{padding:16px}.kpis,.two{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.top{padding:12px 15px}.top strong{font-size:1.05rem}.order-line{grid-template-columns:1fr 75px auto}}
+</style>
+</head>
+<body>
+<header class="top"><strong>Florería Muñiz · Administración</strong><div class="right"><a href="/">Ver sitio</a><button id="logout" class="button light small hidden" type="button">Cerrar sesión</button></div></header>
+<main class="wrap">
+<section id="login-panel" class="card login">
+<h1 style="font:600 2rem Georgia,serif;color:var(--wine);margin:0 0 8px">Panel de administración</h1>
+<p class="muted">Inicia sesión con la cuenta de Google autorizada para administrar el catálogo y registrar ventas.</p>
+<div id="setup-message" class="status hidden"></div>
+<div id="login-message" class="status hidden"></div>
+<button id="google-login" class="button primary" type="button">Continuar con Google</button>
+<p class="hint">El acceso se verifica en Supabase mediante el rol de administrador.</p>
+</section>
+<section id="app-panel" class="hidden">
+<div id="app-message" class="status hidden" role="status"></div>
+<div class="grid kpis">
+<article class="card kpi"><span class="muted">Ingresos este mes</span><strong id="kpi-revenue">$0 MXN</strong></article>
+<article class="card kpi"><span class="muted">Unidades vendidas este mes</span><strong id="kpi-units">0</strong></article>
+<article class="card kpi"><span class="muted">Productos con stock bajo (≤ 3)</span><strong id="kpi-low-stock">0</strong></article>
+</div>
+<div class="grid two">
+<section class="card"><h2>Productos más vendidos</h2><div id="top-products" class="muted">Cargando métricas…</div><p class="hint">Solo considera pedidos pagados o completados.</p></section>
+<section class="card"><h2>Registrar venta o pedido</h2>
+<form id="order-form">
+<div class="form-grid">
+<div class="field"><label for="sale-customer">Nombre del cliente *</label><input id="sale-customer" required maxlength="255"></div>
+<div class="field"><label for="sale-phone">Teléfono (opcional)</label><input id="sale-phone" type="tel" maxlength="50"></div>
+<div class="field"><label for="sale-status">Estado</label><select id="sale-status"><option value="paid">Pagado</option><option value="completed">Completado</option><option value="pending">Pendiente</option><option value="cancelled">Cancelado</option></select></div>
+</div>
+<label class="field"><span style="font-weight:700">Productos *</span></label>
+<div id="order-lines"></div>
+<div class="actions"><button id="add-order-line" class="button light small" type="button">Añadir producto</button><button class="button primary" type="submit">Guardar pedido</button></div>
+</form></section>
+</div>
+<section class="card">
+<div class="right" style="justify-content:space-between;flex-wrap:wrap"><h2 style="margin:0">Catálogo</h2><button id="new-product" class="button primary" type="button">Nuevo producto</button></div>
+<div class="grid two" style="margin-top:18px">
+<form id="product-form">
+<h3 id="product-form-title" style="color:var(--wine);margin:0 0 12px">Agregar producto</h3>
+<input id="product-id" type="hidden">
+<div class="form-grid">
+<div class="field"><label for="product-name">Nombre *</label><input id="product-name" required maxlength="255"></div>
+<div class="field"><label for="product-category">Categoría *</label><input id="product-category" required maxlength="80" placeholder="Ramos buchones"></div>
+<div class="field"><label for="product-price">Precio (MXN) *</label><input id="product-price" type="number" min="0" step="0.01" required></div>
+<div class="field"><label for="product-stock">Existencias</label><input id="product-stock" type="number" min="0" step="1" value="0"></div>
+</div>
+<div class="field"><label for="product-description">Descripción</label><textarea id="product-description" maxlength="2000"></textarea></div>
+<div class="field"><label for="product-note">Nota de precio (opcional)</label><input id="product-note" maxlength="180" placeholder="Precio sujeto a cambios"></div>
+<div class="field"><label for="product-image">Foto (PNG, JPG o WebP, máximo 5 MB)</label><input id="product-image" type="file" accept="image/png,image/jpeg,image/webp"></div>
+<label class="check"><input id="product-active" type="checkbox" checked> Visible en el catálogo</label>
+<div class="actions"><button class="button primary" type="submit">Guardar producto</button><button id="cancel-edit" class="button light" type="button">Limpiar</button></div>
+</form>
+<div><h3 style="color:var(--wine);margin:0 0 12px">Productos registrados</h3><div id="product-count" class="hint"></div><div class="table-wrap"><table><thead><tr><th>Foto</th><th>Producto</th><th>Precio</th><th>Existencias</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="product-rows"><tr><td colspan="6">Cargando catálogo…</td></tr></tbody></table></div></div>
+</div></section>
+<p class="footer-note">Los precios y el estado del catálogo se publican en el sitio. El panel no almacena claves secretas.</p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/supabase-config.js"></script>
+<script>
+(function(){
+"use strict";
+var cfg=window.FLOREIA_SUPABASE_CONFIG||{};
+var loginPanel=document.getElementById("login-panel");
+var appPanel=document.getElementById("app-panel");
+var supabaseClient=null;
+var products=[];
+var orderLineCount=0;
+function showMessage(id,text,kind){var el=document.getElementById(id);el.textContent=text;el.className="status"+(kind?" "+kind:"");el.classList.remove("hidden");}
+function hideMessage(id){document.getElementById(id).classList.add("hidden");}
+function escapeHtml(value){return String(value==null?"":value).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];});}
+function money(value){return "$"+Number(value||0).toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})+" MXN";}
+function setLoggedIn(value){loginPanel.classList.toggle("hidden",value);appPanel.classList.toggle("hidden",!value);document.getElementById("logout").classList.toggle("hidden",!value);}
+function showSetup(){showMessage("setup-message","Falta configurar Supabase. Completa la URL y la clave pública en supabase-config.js, ejecuta supabase/setup.sql y activa Google en Authentication → Providers.","error");}
+async function googleLogin(){hideMessage("login-message");var result=await supabaseClient.auth.signInWithOAuth({provider:"google",options:{redirectTo:window.location.origin+"/admin.html"}});if(result.error)showMessage("login-message",result.error.message,"error");}
+async function checkSession(){
+ var result=await supabaseClient.auth.getSession();
+ if(result.error)throw result.error;
+ if(!result.data.session){setLoggedIn(false);return;}
+ var allowed=await supabaseClient.rpc("is_admin");
+ if(allowed.error){setLoggedIn(false);showMessage("login-message","No se pudo validar el rol. Ejecuta la configuración SQL de Supabase y comprueba la fila en admins. "+allowed.error.message,"error");return;}
+ if(!allowed.data){setLoggedIn(false);showMessage("login-message","Esta cuenta de Google no tiene permiso de administrador. Añade su correo a public.admins desde el Editor SQL de Supabase.","error");return;}
+ hideMessage("login-message");setLoggedIn(true);await loadAll();
+}
+async function loadProducts(){
+ var result=await supabaseClient.from("products").select("id,catalog_key,name,category,description,price,price_note,image_url,stock,is_active,created_at").order("created_at",{ascending:false});
+ if(result.error)throw result.error;
+ products=result.data||[];renderProducts();populateSaleProducts();
+}
+function renderProducts(){
+ var rows=document.getElementById("product-rows");
+ document.getElementById("product-count").textContent=products.length+" productos · "+products.filter(function(p){return p.is_active;}).length+" visibles";
+ if(!products.length){rows.innerHTML='<tr><td colspan="6" class="muted">No hay productos todavía.</td></tr>';return;}
+ rows.innerHTML=products.map(function(p){return '<tr><td><img class="thumb" src="'+escapeHtml(p.image_url||"/assets/catalogo/001.jpg")+'" alt=""></td><td><strong>'+escapeHtml(p.name)+'</strong><br><span class="hint">'+escapeHtml(p.category)+'</span></td><td>'+money(p.price)+'</td><td>'+Number(p.stock||0)+'</td><td>'+(p.is_active?"Visible":"Oculto")+'</td><td><div class="actions"><button class="button light small" data-edit="'+escapeHtml(p.id)+'" type="button">Editar</button><button class="button light small" data-toggle="'+escapeHtml(p.id)+'" type="button">'+(p.is_active?"Ocultar":"Publicar")+'</button></div></td></tr>';}).join("");
+}
+async function loadDashboard(){
+ var start=new Date();start.setDate(1);start.setHours(0,0,0,0);
+ var ordersResult=await supabaseClient.from("orders").select("id,total_amount").in("status",["paid","completed"]).gte("created_at",start.toISOString());
+ if(ordersResult.error)throw ordersResult.error;
+ var orders=ordersResult.data||[];
+ document.getElementById("kpi-revenue").textContent=money(orders.reduce(function(sum,o){return sum+Number(o.total_amount||0);},0));
+ var ids=orders.map(function(o){return o.id;});var units=0;
+ if(ids.length){var itemResult=await supabaseClient.from("order_items").select("quantity").in("order_id",ids);if(itemResult.error)throw itemResult.error;units=(itemResult.data||[]).reduce(function(sum,i){return sum+Number(i.quantity||0);},0);}
+ document.getElementById("kpi-units").textContent=units.toLocaleString("es-MX");
+ document.getElementById("kpi-low-stock").textContent=products.filter(function(p){return p.is_active&&Number(p.stock)<=3;}).length;
+ var top=await supabaseClient.rpc("get_top_selling_products",{limit_count:5});
+ if(top.error)throw top.error;
+ var target=document.getElementById("top-products"),list=top.data||[];
+ if(!list.length){target.innerHTML='<p class="muted">Aún no hay ventas pagadas o completadas.</p>';return;}
+ var max=Math.max.apply(null,list.map(function(p){return Number(p.total_units_sold)||0;}))||1;
+ target.innerHTML=list.map(function(p){var value=Number(p.total_units_sold)||0;return '<div class="top-row"><div><strong>'+escapeHtml(p.product_name)+'</strong><div class="bar-wrap"><div class="bar" style="width:'+Math.max(3,Math.round(value/max*100))+'%"></div></div></div><div style="text-align:right"><strong>'+value+'</strong><div class="hint">'+money(p.total_revenue)+'</div></div></div>';}).join("");
+}
+async function loadAll(){try{hideMessage("app-message");await loadProducts();await loadDashboard();}catch(error){showMessage("app-message","Error al cargar datos: "+error.message,"error");}}
+function makeWebp(file){
+ return new Promise(function(resolve,reject){
+  if(!file){resolve(null);return;}
+  if(!/^image\/(png|jpeg|webp)$/.test(file.type)||file.size>5*1024*1024){reject(new Error("La imagen debe ser PNG, JPG o WebP y pesar máximo 5 MB."));return;}
+  if(!window.createImageBitmap){resolve(file);return;}
+  createImageBitmap(file).then(function(bitmap){
+   var scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));var canvas=document.createElement("canvas");
+   canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+   canvas.getContext("2d").drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+   canvas.toBlob(function(blob){if(blob)resolve(blob);else resolve(file);},"image/webp",0.84);
+  }).catch(reject);
+ });
+}
+async function uploadImage(file,id){
+ if(!file)return null;
+ var webp=await makeWebp(file);var ext=webp.type==="image/webp"?"webp":(webp.type==="image/png"?"png":"jpg");var path=id+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+ext;
+ var result=await supabaseClient.storage.from("product-images").upload(path,webp,{contentType:webp.type||"image/webp",cacheControl:"31536000",upsert:false});
+ if(result.error)throw result.error;
+ return supabaseClient.storage.from("product-images").getPublicUrl(result.data.path).data.publicUrl;
+}
+async function saveProduct(event){
+ event.preventDefault();var button=event.submitter;button.disabled=true;
+ try{
+  var id=document.getElementById("product-id").value||crypto.randomUUID();var existing=products.find(function(p){return p.id===id;});
+  var photo=document.getElementById("product-image").files[0];var imageUrl=existing?existing.image_url:null;
+  if(photo)imageUrl=await uploadImage(photo,id);
+  var payload={id:id,name:document.getElementById("product-name").value.trim(),category:document.getElementById("product-category").value.trim(),description:document.getElementById("product-description").value.trim(),price:Number(document.getElementById("product-price").value),price_note:document.getElementById("product-note").value.trim()||null,stock:Number(document.getElementById("product-stock").value)||0,is_active:document.getElementById("product-active").checked,image_url:imageUrl};
+  var result=await supabaseClient.from("products").upsert(payload);if(result.error)throw result.error;
+  resetProductForm();await loadAll();showMessage("app-message","Producto guardado y actualizado en el catálogo.","ok");
+ }catch(error){showMessage("app-message","No se pudo guardar el producto: "+error.message,"error");}
+ finally{button.disabled=false;}
+}
+function resetProductForm(){document.getElementById("product-form").reset();document.getElementById("product-id").value="";document.getElementById("product-stock").value="0";document.getElementById("product-active").checked=true;document.getElementById("product-form-title").textContent="Agregar producto";document.getElementById("product-image").value="";}
+function editProduct(id){var p=products.find(function(item){return item.id===id;});if(!p)return;document.getElementById("product-id").value=p.id;document.getElementById("product-name").value=p.name;document.getElementById("product-category").value=p.category;document.getElementById("product-price").value=p.price;document.getElementById("product-stock").value=p.stock;document.getElementById("product-description").value=p.description||"";document.getElementById("product-note").value=p.price_note||"";document.getElementById("product-active").checked=p.is_active;document.getElementById("product-form-title").textContent="Editar producto";window.scrollTo({top:document.getElementById("product-form").offsetTop-80,behavior:"smooth"});}
+async function toggleProduct(id){var p=products.find(function(item){return item.id===id;});if(!p)return;var result=await supabaseClient.from("products").update({is_active:!p.is_active}).eq("id",id);if(result.error){showMessage("app-message",result.error.message,"error");return;}await loadAll();}
+function populateSaleProducts(){
+ document.querySelectorAll(".sale-product").forEach(function(select){var current=select.value;select.innerHTML='<option value="">Selecciona producto</option>'+products.filter(function(p){return p.is_active;}).map(function(p){return '<option value="'+escapeHtml(p.id)+'">'+escapeHtml(p.name)+' · '+money(p.price)+'</option>';}).join("");select.value=current;});
+}
+function addOrderLine(){
+ orderLineCount++;var row=document.createElement("div");row.className="order-line";row.innerHTML='<select class="field-control sale-product" aria-label="Producto" required><option value="">Selecciona producto</option></select><input type="number" min="1" step="1" value="1" class="sale-quantity" aria-label="Cantidad" required><button class="line-remove" type="button" aria-label="Quitar producto">×</button>';
+ document.getElementById("order-lines").appendChild(row);row.querySelector(".line-remove").addEventListener("click",function(){row.remove();});populateSaleProducts();
+}
+async function recordOrder(event){
+ event.preventDefault();var rows=Array.from(document.querySelectorAll(".order-line"));
+ var items=rows.map(function(row){return {product_id:row.querySelector(".sale-product").value,quantity:Number(row.querySelector(".sale-quantity").value)};});
+ if(!items.length||items.some(function(i){return !i.product_id||!Number.isInteger(i.quantity)||i.quantity<1;})){showMessage("app-message","Agrega al menos un producto y una cantidad válida.","error");return;}
+ var result=await supabaseClient.rpc("create_admin_order",{p_customer_name:document.getElementById("sale-customer").value.trim(),p_customer_phone:document.getElementById("sale-phone").value.trim()||null,p_status:document.getElementById("sale-status").value,p_items:items});
+ if(result.error){showMessage("app-message","No se pudo registrar el pedido: "+result.error.message,"error");return;}
+ document.getElementById("order-form").reset();document.getElementById("order-lines").innerHTML="";addOrderLine();await loadAll();showMessage("app-message","Pedido registrado. Las ventas pagadas o completadas se reflejan en las métricas.","ok");
+}
+async function start(){
+ if(!cfg.url||!cfg.anonKey||!window.supabase||!window.supabase.createClient){showSetup();return;}
+ supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey);
+ document.getElementById("google-login").addEventListener("click",googleLogin);
+ document.getElementById("logout").addEventListener("click",async function(){await supabaseClient.auth.signOut();setLoggedIn(false);});
+ document.getElementById("product-form").addEventListener("submit",saveProduct);
+ document.getElementById("new-product").addEventListener("click",function(){resetProductForm();document.getElementById("product-form").scrollIntoView({behavior:"smooth"});});
+ document.getElementById("cancel-edit").addEventListener("click",resetProductForm);
+ document.getElementById("product-rows").addEventListener("click",function(event){var edit=event.target.closest("[data-edit]");var toggle=event.target.closest("[data-toggle]");if(edit)editProduct(edit.dataset.edit);if(toggle)toggleProduct(toggle.dataset.toggle);});
+ document.getElementById("add-order-line").addEventListener("click",addOrderLine);
+ document.getElementById("order-form").addEventListener("submit",recordOrder);
+ addOrderLine();
+ supabaseClient.auth.onAuthStateChange(function(){window.setTimeout(function(){checkSession().catch(function(error){showMessage("login-message",error.message,"error");});},0);});
+ try{await checkSession();}catch(error){showMessage("login-message",error.message,"error");}
+}
+start();
+})();
+</script>
+</body>
+</html>

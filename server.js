@@ -20,10 +20,28 @@ const MIME_TYPES = {
 // Cache index.html in memory
 const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'));
 const privacyHtml = fs.readFileSync(path.join(__dirname, 'aviso-privacidad.html'));
+const adminHtml = fs.readFileSync(path.join(__dirname, 'admin.html'));
+const supabaseConfigJs = fs.readFileSync(path.join(__dirname, 'supabase-config.js'));
 
 function handler(req, res) {
   const cleanUrl = decodeURIComponent((req.url || '/').split('?')[0]);
   
+  if (cleanUrl === '/admin.html') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    });
+    return res.end(adminHtml);
+  }
+
+  if (cleanUrl === '/supabase-config.js') {
+    res.writeHead(200, {
+      'Content-Type': 'text/javascript; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    });
+    return res.end(supabaseConfigJs);
+  }
+
   if (cleanUrl === '/' || cleanUrl === '/index.html') {
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8',
