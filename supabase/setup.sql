@@ -419,10 +419,13 @@ BEGIN
   IF nullif(trim(p_customer_name),'') IS NULL THEN
     RAISE EXCEPTION 'Customer name is required';
   END IF;
-  IF p_fulfillment_status NOT IN ('pending','confirmed','preparing','ready','delivered','cancelled') THEN
+  IF p_fulfillment_status IS NULL OR p_fulfillment_status NOT IN ('pending','confirmed','preparing','ready','delivered','cancelled') THEN
     RAISE EXCEPTION 'Invalid fulfillment status';
   END IF;
-  IF jsonb_typeof(p_items) IS DISTINCT FROM 'array' OR jsonb_array_length(p_items) = 0 THEN
+  IF jsonb_typeof(p_items) IS DISTINCT FROM 'array' THEN
+    RAISE EXCEPTION 'Order items must be a JSON array';
+  END IF;
+  IF jsonb_array_length(p_items) = 0 THEN
     RAISE EXCEPTION 'At least one order item is required';
   END IF;
 
