@@ -339,6 +339,20 @@ function periodBounds(){
  return {start:start,end:end,mode:mode};
 }
 function reportXmlEscape(value){return String(value==null?"":value).replace(/[&<>\"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];});}
+function printSalesReport(){
+ if(!currentSalesReport){showMessage("app-message","Primero genera el reporte del período.","error");return;}
+ var printWindow=window.open("about:blank","_blank");
+ if(!printWindow){showMessage("app-message","El navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio e inténtalo de nuevo.","error");return;}
+ var report=document.getElementById("sales-report").cloneNode(true);
+ var actions=report.querySelector("#report-actions");if(actions)actions.remove();
+ var filters=report.querySelector(".report-filters");if(filters)filters.remove();
+ var title="Reporte de ventas · Florería Muñiz";
+ var styles="*{box-sizing:border-box}body{margin:28px;color:#292323;font:14px/1.45 Arial,Helvetica,sans-serif}h2{margin:0 0 4px;color:#651028;font:600 24px Georgia,serif}.hint{color:#706466;font-size:12px}.report-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.card{padding:12px;border:1px solid #eadcda;border-radius:10px}.report-kpis strong{display:block;margin-top:6px;font-size:18px}.table-wrap{width:100%;overflow:visible}table{width:100%;border-collapse:collapse;min-width:0;font-size:12px}th,td{padding:8px 7px;border-bottom:1px solid #eadcda;text-align:left}th{background:#f7e7e9;color:#651028;font-size:10px;text-transform:uppercase;letter-spacing:.04em}.muted{color:#706466}@page{size:auto;margin:14mm}@media print{body{margin:0}}";
+ printWindow.document.open();
+ printWindow.document.write("<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>"+title+"</title><style>"+styles+"</style></head><body>"+report.outerHTML+"<script>window.addEventListener('load',function(){setTimeout(function(){window.focus();window.print();},180);});<\\/script></body></html>");
+ printWindow.document.close();
+ printWindow.opener=null;
+}
 function downloadSalesExcel(){
  if(!currentSalesReport){showMessage("app-message","Primero genera el reporte del período.","error");return;}
  var r=currentSalesReport;function cell(value,type,style){return '<Cell'+(style?' ss:StyleID="'+style+'"':'')+'><Data ss:Type="'+(type||"String")+'">'+reportXmlEscape(value)+'</Data></Cell>';}
@@ -449,7 +463,7 @@ async function start(){
  document.getElementById("report-period").addEventListener("change",function(){var custom=this.value==="custom";document.getElementById("report-reference-wrap").classList.toggle("hidden",custom);document.getElementById("report-from-wrap").classList.toggle("hidden",!custom);document.getElementById("report-to-wrap").classList.toggle("hidden",!custom);});
  document.getElementById("refresh-report").addEventListener("click",runSalesReport);
  document.getElementById("export-sales").addEventListener("click",downloadSalesExcel);
- document.getElementById("print-sales").addEventListener("click",function(){window.print();});
+ document.getElementById("print-sales").addEventListener("click",printSalesReport);
  addOrderLine();
  supabaseClient.auth.onAuthStateChange(function(){window.setTimeout(function(){checkSession().catch(function(error){showMessage("login-message",error.message,"error");});},0);});
  try{await checkSession();}catch(error){showMessage("login-message",error.message,"error");}
