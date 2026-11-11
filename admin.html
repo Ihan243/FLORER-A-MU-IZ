@@ -11,6 +11,66 @@
 *{box-sizing:border-box}body{margin:0;background:#f8f3f0;color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:var(--wine);color:#fff;padding:15px max(20px,calc((100% - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:15px}.top strong{font:600 1.25rem Georgia,serif}.top a{color:white}.wrap{width:min(1200px,calc(100% - 32px));margin:26px auto 60px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}.card h2{font:600 1.35rem Georgia,serif;color:var(--wine);margin:0 0 16px}.muted{color:var(--muted)}.hint{font-size:.85rem;color:var(--muted)}.status{padding:12px 15px;border-radius:12px;background:#f6f3e9;color:#564b31;margin:14px 0}.status.error{background:#fae9e8;color:#7c1f26}.status.ok{background:#eaf4e6;color:#345b30}.button{border:0;border-radius:999px;padding:11px 17px;font-weight:700}.primary{background:var(--wine);color:white}.primary:hover{background:var(--wine-dark)}.light{background:var(--rose);color:var(--wine)}.small{font-size:.84rem;padding:7px 12px}.login{max-width:560px;margin:60px auto;text-align:center}.login .button{width:100%;margin-top:14px}.grid{display:grid;gap:18px}.kpis{grid-template-columns:repeat(3,1fr)}.kpi strong{display:block;color:var(--wine);font-size:1.7rem;margin-top:7px}.two{grid-template-columns:1fr 1fr}.field{display:grid;gap:5px;margin-bottom:12px}.field label{font-weight:700;font-size:.9rem}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}.field textarea{min-height:76px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px;margin:10px 0}.check input{accent-color:var(--wine)}.actions{display:flex;gap:8px;flex-wrap:wrap}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:.77rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.catalog-admin-layout{grid-template-columns:minmax(300px,.85fr) minmax(0,2fr);align-items:start}.product-category-tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:thin}.category-tab{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--wine)}.category-tab.active{background:var(--wine);color:#fff}.product-pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:14px}.product-pagination[hidden]{display:none}.product-sections{display:grid;gap:18px;margin-top:12px}.product-category-section{min-width:0}.product-category-heading{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px;padding-bottom:7px;border-bottom:1px solid var(--line)}.product-category-heading h4{margin:0;color:var(--wine);font:600 1.05rem Georgia,serif}.product-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}.product-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 4px 14px #39101b08}.product-card-image{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--rose)}.product-card-body{display:grid;gap:8px;padding:12px}.product-card-title{display:block;color:var(--wine);font:600 1.05rem Georgia,serif;overflow-wrap:anywhere}.product-card-price{color:var(--green);font-weight:700}.product-card-meta{display:flex;justify-content:space-between;gap:8px;font-size:.85rem}.product-card-status{justify-self:start;border-radius:99px;padding:3px 9px;font-size:.75rem;font-weight:700}.product-card-status.is-active{background:#eaf4e6;color:#345b30}.product-card-status.is-hidden{background:#f3eeee;color:var(--muted)}.product-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:3px}.top-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0}.bar-wrap{height:8px;background:#f2e7e7;border-radius:99px;overflow:hidden;margin-top:4px}.bar{height:100%;background:var(--wine);border-radius:99px}.order-line{display:grid;grid-template-columns:1fr 100px auto;gap:8px;margin-bottom:8px}.line-remove{border:1px solid var(--line);background:#fff;border-radius:8px;padding:0 10px;color:var(--wine)}.right{display:flex;gap:9px;align-items:center}.hidden{display:none!important}.footer-note{text-align:center;color:var(--muted);font-size:.84rem;margin-top:24px}
 @media(max-width:760px){.wrap{width:calc(100% - 22px);margin-top:14px}.card{padding:16px}.kpis,.two{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.top{padding:12px 15px}.top strong{font-size:1.05rem}.order-line{grid-template-columns:1fr 75px auto}}
 @media(max-width:1050px){.catalog-admin-layout{grid-template-columns:1fr}}@media(max-width:760px){.product-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.product-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-card-body{padding:9px}.product-card-actions{gap:5px}}@media(max-width:350px){.product-card-grid{grid-template-columns:1fr}}@media(max-width:760px){.report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}@media print{body{background:#fff!important}.top,.login,.kpis:not(.report-kpis),#app-message,#product-form,.product-category-tabs,#product-rows,#product-pagination,.footer-note,#report-actions,.report-filters,#report-cost-note,#order-form,#top-products{display:none!important}#app-panel>.grid,#app-panel>section:not(#sales-report){display:none!important}#sales-report{display:block!important;position:absolute;left:0;top:0;width:100%;margin:0;padding:0;border:0;box-shadow:none}.report-kpis{grid-template-columns:repeat(4,1fr)!important;gap:8px!important}.report-kpis .card{margin:0;padding:10px;border:1px solid #ddd;box-shadow:none}.report-kpis strong{font-size:1rem}.table-wrap{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px;border-bottom:1px solid #ddd}.card{break-inside:avoid}}
+
+/* Resumen ejecutivo */
+.dashboard{margin:14px 0 22px;color:#26342d}
+.dashboard-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:4px 0 18px}
+.dashboard-head h1{font:700 clamp(2rem,3vw,2.6rem) Georgia,serif;color:#26342d;margin:0}
+.dashboard-head p{margin:5px 0 0;color:#7b8980}
+.dashboard-actions{display:flex;flex-wrap:wrap;gap:8px}
+.dashboard-actions .button{border-radius:11px;padding:9px 13px;font-size:.82rem}
+.dashboard .primary{background:#13785c;color:#fff}.dashboard .primary:hover{background:#0c634b}
+.dashboard .light{background:#edf4ef;color:#426454}
+.dashboard-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.dashboard-metric{margin:0;border:1px solid #e2eae4;border-radius:17px;padding:17px;background:#fff;box-shadow:0 8px 24px #1c39250a}
+.dashboard-metric:first-child{background:#13785c;border-color:#13785c;color:#fff}
+.dashboard-metric span{font-size:.82rem;color:#7e8e84}
+.dashboard-metric:first-child span,.dashboard-metric:first-child small{color:#e3f4eb}
+.dashboard-metric strong{display:block;margin:8px 0 2px;font:700 1.65rem Georgia,serif;color:#29362f}
+.dashboard-metric:first-child strong{color:#fff}
+.dashboard-metric small{color:#718178;font-size:.75rem}
+.dashboard-row{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:14px;margin-bottom:14px}
+.dashboard-bottom{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+.dashboard-card{margin:0;padding:17px;border:1px solid #e2eae4;border-radius:17px;background:#fff;box-shadow:0 8px 24px #1c39250a;min-width:0}
+.dashboard-card h2{font:700 1.05rem Georgia,serif;color:#29362f;margin:0}
+.dashboard-card .hint{margin:4px 0 12px;color:#7c8981;font-size:.78rem}
+.dashboard-chart-head{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.chart-filter{display:flex;gap:3px;padding:3px;border-radius:10px;background:#f1f5f2}
+.chart-filter button{border:0;background:transparent;padding:5px 8px;border-radius:7px;color:#718078;font-size:.75rem;font-weight:700}
+.chart-filter button.active{background:#fff;color:#13785c;box-shadow:0 1px 4px #172d2017}
+.sales-chart{width:100%;height:205px;display:block;overflow:visible}
+.sales-chart text{font:11px Arial,sans-serif;fill:#819087}
+.spotlight-image{width:100%;height:130px;object-fit:cover;border-radius:12px;background:#f0f3ed}
+.spotlight-fallback{display:grid;place-items:center;height:130px;border-radius:12px;background:linear-gradient(145deg,#e5eee5,#f4e9dd);color:#a35764;font-size:2.4rem}
+.spotlight-category{margin:10px 0 2px;color:#138060;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.spotlight-name{font:700 1.1rem Georgia,serif;color:#29362f}
+.spotlight-meta{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #e5ece6;margin-top:10px;padding-top:9px;font-size:.75rem;color:#7c8981}
+.spotlight-meta strong{display:block;color:#13785c;font-size:.9rem}
+.dashboard-best-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #edf1ed}
+.dashboard-best-row:last-child{border-bottom:0}
+.dashboard-best-icon{width:34px;height:34px;border-radius:10px;background:#f5efea;display:grid;place-items:center;color:#b65668;flex:0 0 auto}
+.dashboard-best-name{font-size:.78rem;font-weight:700;color:#29362f}
+.dashboard-best-sub{font-size:.7rem;color:#7c8981}
+.dashboard-best-qty{margin-left:auto;color:#13785c;font-weight:700;font-size:.78rem}
+.dashboard-donut-wrap{display:flex;align-items:center;gap:15px;min-height:130px}
+.dashboard-donut{width:112px;height:112px;flex:0 0 112px;border-radius:50%;position:relative;background:conic-gradient(#13785c 0 100%)}
+.dashboard-donut:after{content:"";position:absolute;inset:13px;border-radius:50%;background:#fff}
+.dashboard-donut-center{position:absolute;z-index:1;inset:0;display:grid;place-content:center;text-align:center;font-weight:700;color:#29362f;font-size:.83rem}
+.dashboard-donut-center small{font-size:.6rem;font-weight:400;color:#7c8981}
+.dashboard-legend{display:grid;gap:8px;min-width:0;font-size:.7rem;color:#65746b;flex:1}
+.dashboard-legend-row{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.dashboard-legend-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.dashboard-legend-row strong{margin-left:auto;color:#29362f}
+.inventory-health{display:flex;align-items:center;gap:14px;min-height:112px}
+.inventory-ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;background:conic-gradient(#13785c var(--health),#e8eee9 0)}
+.inventory-ring:before{content:attr(data-percent);position:absolute;display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:#fff;color:#13785c;font:700 1.1rem Georgia,serif}
+.inventory-copy strong{display:block;font-size:.85rem;color:#29362f}
+.inventory-copy span{font-size:.72rem;color:#7c8981}
+.inventory-alert{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:99px;background:#eaf4ee;color:#176d55;font-size:.68rem;font-weight:700}
+.dashboard-empty{font-size:.8rem;color:#7c8981;padding:15px 0}
+@media(max-width:900px){.dashboard-bottom{grid-template-columns:1fr 1fr}.dashboard-bottom .dashboard-card:last-child{grid-column:1/-1}}
+@media(max-width:650px){.dashboard-head{align-items:start;flex-direction:column}.dashboard-actions{width:100%}.dashboard-actions .button{flex:1}.dashboard-metrics{grid-template-columns:1fr 1fr;gap:8px}.dashboard-metric{padding:13px}.dashboard-metric strong{font-size:1.35rem}.dashboard-row,.dashboard-bottom{grid-template-columns:1fr}.dashboard-bottom .dashboard-card:last-child{grid-column:auto}.sales-chart{height:185px}}
+
 </style>
 </head>
 <body>
@@ -26,11 +86,25 @@
 </section>
 <section id="app-panel" class="hidden">
 <div id="app-message" class="status hidden" role="status"></div>
-<div class="grid kpis">
-<article class="card kpi"><span class="muted">Ingresos este mes</span><strong id="kpi-revenue">$0 MXN</strong></article>
-<article class="card kpi"><span class="muted">Unidades vendidas este mes</span><strong id="kpi-units">0</strong></article>
-<article class="card kpi"><span class="muted">Productos con stock bajo (≤ 3)</span><strong id="kpi-low-stock">0</strong></article>
+<section class="dashboard" id="dashboard-overview" aria-label="Resumen del negocio">
+<div class="dashboard-head"><div><h1>Resumen</h1><p>El estado de tu negocio de un vistazo · <span id="dashboard-date"></span></p></div>
+<div class="dashboard-actions"><button id="dashboard-to-reports" class="button light" type="button">▤ Ver reportes</button><button id="dashboard-to-inventory" class="button primary" type="button">＋ Agregar al inventario</button><button id="dashboard-to-stock" class="button light" type="button">△ Ver stock bajo</button><button id="dashboard-export" class="button light" type="button">↓ Exportar CSV</button></div></div>
+<div class="dashboard-metrics">
+<article class="dashboard-metric"><span>Ventas de hoy</span><strong id="dashboard-today">$0 MXN</strong><small id="dashboard-today-note">Pedidos pagados/completados</small></article>
+<article class="dashboard-metric"><span>Ventas del mes</span><strong id="kpi-revenue">$0 MXN</strong><small id="dashboard-month-note">0 pedidos · 0 unidades</small></article>
+<article class="dashboard-metric"><span>Ganancia estimada del mes</span><strong id="dashboard-profit">Pendiente</strong><small id="dashboard-profit-note">Captura los costos para calcularla</small></article>
+<article class="dashboard-metric"><span>Compras del mes</span><strong id="dashboard-purchases">Sin registro</strong><small>No hay módulo de compras conectado</small></article>
 </div>
+<div class="dashboard-row">
+<article class="dashboard-card"><div class="dashboard-chart-head"><div><h2>Ventas por día</h2><p id="dashboard-chart-caption" class="hint">Tendencia de ventas · Últimos 7 días</p></div><div class="chart-filter" role="group" aria-label="Período del gráfico"><button type="button" data-chart-days="7" class="active">7d</button><button type="button" data-chart-days="30">30d</button><button type="button" data-chart-days="90">90d</button></div></div><svg id="dashboard-chart" class="sales-chart" viewBox="0 0 720 230" role="img" aria-label="Gráfico de ventas por día"></svg></article>
+<article class="dashboard-card"><div class="dashboard-chart-head"><div><h2>Producto destacado</h2><p class="hint">Más vendido este mes</p></div></div><div id="dashboard-spotlight"><div class="spotlight-fallback">✿</div><p class="dashboard-empty">Aún no hay ventas registradas este mes.</p></div></article>
+</div>
+<div class="dashboard-bottom">
+<article class="dashboard-card"><h2>Productos más vendidos</h2><p class="hint">Este mes · por unidades</p><div id="dashboard-top-products"><div class="dashboard-empty">Cargando ventas…</div></div></article>
+<article class="dashboard-card"><h2>Ventas por categoría</h2><p class="hint">Distribución de ventas del mes</p><div class="dashboard-donut-wrap"><div id="dashboard-donut" class="dashboard-donut"><div class="dashboard-donut-center"><span id="dashboard-donut-total">$0</span><small>ventas totales</small></div></div><div id="dashboard-category-legend" class="dashboard-legend"><span class="dashboard-empty">Sin ventas aún.</span></div></div></article>
+<article class="dashboard-card"><h2>Salud del inventario</h2><p class="hint">Productos sobre mínimo</p><div class="inventory-health"><div id="dashboard-inventory-ring" class="inventory-ring" data-percent="0%"></div><div class="inventory-copy"><strong>Inventario activo</strong><span id="dashboard-inventory-copy">Sin productos registrados</span><span id="kpi-units" class="hidden">0</span><span id="kpi-low-stock" class="hidden">0</span><br><span id="dashboard-inventory-alert" class="inventory-alert">Sin alertas</span></div></div><div class="spotlight-meta"><span>Última revisión</span><strong id="dashboard-updated">—</strong></div></article>
+</div>
+</section>
 <section id="sales-report" class="card">
 <div class="right" style="justify-content:space-between;flex-wrap:wrap"><div><h2 style="margin:0">Reporte de ventas</h2><p class="hint" style="margin:4px 0 0">Consulta productos vendidos y ganancia bruta por período.</p></div><div id="report-actions" class="actions"><button id="export-sales" class="button light small" type="button">Descargar Excel</button><button id="print-sales" class="button primary small" type="button">Imprimir / guardar PDF</button></div></div>
 <div class="form-grid report-filters" style="margin-top:16px;align-items:end">
@@ -101,6 +175,7 @@ var products=[];
 var costTrackingEnabled=false;
 var currentSalesReport=null;
 var orderLineCount=0;
+var dashboardData={orders:[],top:[],monthItems:[],monthCostsKnown:false,chartDays:7};
 var selectedProductCategory="";
 var productPage=1;
 var productsPerPage=8;
@@ -150,23 +225,83 @@ function renderProducts(){
  document.getElementById("products-next").disabled=productPage>=pageCount;
  document.getElementById("products-page-status").textContent="Página "+productPage+" de "+pageCount+" · "+items.length+" productos";
 }
-async function loadDashboard(){
- var start=new Date();start.setDate(1);start.setHours(0,0,0,0);
- var ordersResult=await supabaseClient.from("orders").select("id,total_amount").in("status",["paid","completed"]).gte("created_at",start.toISOString());
- if(ordersResult.error)throw ordersResult.error;
- var orders=ordersResult.data||[];
- document.getElementById("kpi-revenue").textContent=money(orders.reduce(function(sum,o){return sum+Number(o.total_amount||0);},0));
- var ids=orders.map(function(o){return o.id;});var units=0;
- if(ids.length){var itemResult=await supabaseClient.from("order_items").select("quantity").in("order_id",ids);if(itemResult.error)throw itemResult.error;units=(itemResult.data||[]).reduce(function(sum,i){return sum+Number(i.quantity||0);},0);}
- document.getElementById("kpi-units").textContent=units.toLocaleString("es-MX");
- document.getElementById("kpi-low-stock").textContent=products.filter(function(p){return p.is_active&&Number(p.stock)<=3;}).length;
- var top=await supabaseClient.rpc("get_top_selling_products",{limit_count:5});
- if(top.error)throw top.error;
- var target=document.getElementById("top-products"),list=top.data||[];
- if(!list.length){target.innerHTML='<p class="muted">Aún no hay ventas pagadas o completadas.</p>';return;}
- var max=Math.max.apply(null,list.map(function(p){return Number(p.total_units_sold)||0;}))||1;
- target.innerHTML=list.map(function(p){var value=Number(p.total_units_sold)||0;return '<div class="top-row"><div><strong>'+escapeHtml(p.product_name)+'</strong><div class="bar-wrap"><div class="bar" style="width:'+Math.max(3,Math.round(value/max*100))+'%"></div></div></div><div style="text-align:right"><strong>'+value+'</strong><div class="hint">'+money(p.total_revenue)+'</div></div></div>';}).join("");
+function dashboardDateKey(value){return new Intl.DateTimeFormat("en-CA",{timeZone:"America/Mexico_City",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(value));}
+function dashboardTodayKey(){return dashboardDateKey(new Date());}
+function renderDashboardChart(){
+ var days=dashboardData.chartDays||7,now=new Date(),todayKey=dashboardTodayKey(),totals={};
+ dashboardData.orders.forEach(function(o){var key=dashboardDateKey(o.created_at);totals[key]=(totals[key]||0)+Number(o.total_amount||0);});
+ var data=[];
+ for(var i=days-1;i>=0;i--){var d=new Date(now);d.setDate(now.getDate()-i);var key=dashboardDateKey(d);data.push({key:key,value:totals[key]||0,label:new Intl.DateTimeFormat("es-MX",{timeZone:"America/Mexico_City",weekday:days>7?undefined:"short",day:days>7?"numeric":undefined}).format(d)});}
+ var svg=document.getElementById("dashboard-chart"),max=Math.max.apply(null,data.map(function(x){return x.value;}))||1,left=12,right=708,top=22,bottom=190;
+ var points=data.map(function(x,i){return {x:left+(data.length===1?0:i*(right-left)/(data.length-1)),y:top+(max-x.value)/max*(bottom-top),item:x};});
+ var line=points.map(function(p,i){return (i?"L":"M")+p.x.toFixed(1)+" "+p.y.toFixed(1);}).join(" ");
+ var area=line+" L "+right+" "+bottom+" L "+left+" "+bottom+" Z";
+ var grid=[.25,.55,.85].map(function(r){var y=top+(bottom-top)*r;return '<line x1="'+left+'" y1="'+y.toFixed(1)+'" x2="'+right+'" y2="'+y.toFixed(1)+'" stroke="#e9efea" stroke-dasharray="4 5"/>';}).join("");
+ var labelEvery=Math.max(1,Math.ceil(data.length/7));
+ var labels=points.map(function(p,i){if(i%labelEvery!==0&&i!==points.length-1)return "";return '<text x="'+p.x.toFixed(1)+'" y="218" text-anchor="middle">'+escapeHtml(p.item.label)+'</text>';}).join("");
+ var mark=points.length?'<circle cx="'+points[points.length-1].x.toFixed(1)+'" cy="'+points[points.length-1].y.toFixed(1)+'" r="4" fill="#fff" stroke="#13785c" stroke-width="2"/>':"";
+ svg.innerHTML='<defs><linearGradient id="dashboard-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#13785c" stop-opacity=".18"/><stop offset="1" stop-color="#13785c" stop-opacity="0"/></linearGradient></defs>'+grid+'<path d="'+area+'" fill="url(#dashboard-area)"/><path d="'+line+'" fill="none" stroke="#168261" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+mark+labels;
+ document.getElementById("dashboard-chart-caption").textContent="Tendencia de ventas · Últimos "+days+" días";
 }
+function renderDashboardSummary(){
+ var today=dashboardTodayKey(),monthPrefix=today.slice(0,7),todayOrders=dashboardData.orders.filter(function(o){return dashboardDateKey(o.created_at)===today;}),monthOrders=dashboardData.orders.filter(function(o){return dashboardDateKey(o.created_at).slice(0,7)===monthPrefix;});
+ var todaySales=todayOrders.reduce(function(s,o){return s+Number(o.total_amount||0);},0),monthSales=monthOrders.reduce(function(s,o){return s+Number(o.total_amount||0);},0),units=dashboardData.monthItems.reduce(function(s,i){return s+Number(i.quantity||0);},0);
+ document.getElementById("dashboard-today").textContent=money(todaySales);document.getElementById("kpi-revenue").textContent=money(monthSales);document.getElementById("dashboard-month-note").textContent=monthOrders.length.toLocaleString("es-MX")+" pedidos · "+units.toLocaleString("es-MX")+" unidades";
+ var profit=document.getElementById("dashboard-profit"),profitNote=document.getElementById("dashboard-profit-note");
+ if(dashboardData.monthCostsKnown){var costs=dashboardData.monthItems.reduce(function(s,i){return s+Number(i.unit_cost_snapshot||0)*Number(i.quantity||0);},0);profit.textContent=money(monthSales-costs);profitNote.textContent="Ventas menos costo directo · sin otros gastos";}
+ else{profit.textContent="Pendiente";profitNote.textContent="Agrega costos unitarios para calcular";}
+ var active=products.filter(function(p){return p.is_active;}),low=active.filter(function(p){return Number(p.stock)<=3;}),healthy=active.length-low.length,pct=active.length?Math.round(healthy/active.length*100):0;
+ document.getElementById("kpi-units").textContent=units.toLocaleString("es-MX");document.getElementById("kpi-low-stock").textContent=low.length.toLocaleString("es-MX");
+ var ring=document.getElementById("dashboard-inventory-ring");ring.style.setProperty("--health",pct+"%");ring.setAttribute("data-percent",pct+"%");
+ document.getElementById("dashboard-inventory-copy").textContent=active.length?healthy+" de "+active.length+" productos están sobre el mínimo (3).":"Sin productos registrados";
+ document.getElementById("dashboard-inventory-alert").textContent=low.length?low.length+" requieren atención":"Inventario saludable";
+ document.getElementById("dashboard-date").textContent=new Intl.DateTimeFormat("es-MX",{timeZone:"America/Mexico_City",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
+ document.getElementById("dashboard-updated").textContent=new Intl.DateTimeFormat("es-MX",{timeZone:"America/Mexico_City",hour:"numeric",minute:"2-digit"}).format(new Date());
+ renderDashboardChart();renderDashboardProducts();renderDashboardCategories();
+}
+function renderDashboardProducts(){
+ var list=dashboardData.top||[],container=document.getElementById("dashboard-top-products"),spot=document.getElementById("dashboard-spotlight");
+ if(!list.length){container.innerHTML='<p class="dashboard-empty">Aún no hay ventas pagadas o completadas este mes.</p>';spot.innerHTML='<div class="spotlight-fallback">✿</div><p class="dashboard-empty">El producto destacado aparecerá con las primeras ventas.</p>';return;}
+ var max=Number(list[0].total_units_sold)||1;
+ container.innerHTML=list.slice(0,5).map(function(item){var product=products.find(function(p){return p.id===item.product_id;});return '<div class="dashboard-best-row"><span class="dashboard-best-icon">✿</span><div><div class="dashboard-best-name">'+escapeHtml(item.product_name)+'</div><div class="dashboard-best-sub">'+escapeHtml(product&&product.category||"Producto")+' · '+money(item.total_revenue)+'</div></div><span class="dashboard-best-qty">'+Number(item.total_units_sold||0).toLocaleString("es-MX")+' u</span></div>';}).join("");
+ var featured=list[0],fp=products.find(function(p){return p.id===featured.product_id;});
+ var image=fp&&fp.image_url&&(/^(https?:\/\/|\/)/.test(fp.image_url))?'<img class="spotlight-image" src="'+escapeHtml(fp.image_url)+'" alt="'+escapeHtml(featured.product_name)+'" loading="lazy">':'<div class="spotlight-fallback">✿</div>';
+ spot.innerHTML=image+'<div class="spotlight-category">'+escapeHtml(fp&&fp.category||"Más vendido")+'</div><div class="spotlight-name">'+escapeHtml(featured.product_name)+'</div><div class="spotlight-meta"><span>Unidades vendidas<strong>'+Number(featured.total_units_sold||0).toLocaleString("es-MX")+'</strong></span><span>Existencias<strong>'+Number(fp&&fp.stock||0).toLocaleString("es-MX")+'</strong></span></div>';
+}
+function renderDashboardCategories(){
+ var totals={},palette=["#13785c","#8ab89a","#cfe0d3","#547d67","#b0caba"],productsById={};
+ products.forEach(function(p){productsById[p.id]=p;});
+ dashboardData.monthItems.forEach(function(item){var product=productsById[item.product_id],name=product&&product.category||"Sin categoría";totals[name]=(totals[name]||0)+Number(item.quantity||0)*Number(item.unit_price_snapshot||0);});
+ var entries=Object.keys(totals).map(function(name){return {name:name,value:totals[name]};}).sort(function(a,b){return b.value-a.value;}).slice(0,5),sum=entries.reduce(function(s,x){return s+x.value;},0);
+ document.getElementById("dashboard-donut-total").textContent=sum?("$"+(sum/1000).toFixed(1)+"k"):money(0);
+ var angle=0,segments=entries.map(function(x,i){var start=angle,portion=sum?x.value/sum*100:0;angle+=portion;return palette[i%palette.length]+" "+start.toFixed(2)+"% "+angle.toFixed(2)+"%";});
+ document.getElementById("dashboard-donut").style.background=segments.length?"conic-gradient("+segments.join(",")+")":"conic-gradient(#e8eee9 0 100%)";
+ document.getElementById("dashboard-category-legend").innerHTML=entries.length?entries.map(function(x,i){return '<div class="dashboard-legend-row"><span class="dashboard-legend-dot" style="background:'+palette[i%palette.length]+'"></span><span>'+escapeHtml(x.name)+'</span><strong>'+Math.round(x.value/sum*100)+'%</strong></div>';}).join(""):'<span class="dashboard-empty">Sin ventas registradas este mes.</span>';
+}
+async function loadDashboard(){
+ var start=new Date();start.setDate(start.getDate()-89);start.setHours(0,0,0,0);
+ var orders=[],offset=0,page;
+ do{page=await supabaseClient.from("orders").select("id,total_amount,created_at,status").in("status",["paid","completed"]).gte("created_at",start.toISOString()).order("created_at",{ascending:true}).range(offset,offset+999);if(page.error)throw page.error;orders=orders.concat(page.data||[]);offset+=1000;}while((page.data||[]).length===1000);
+ dashboardData.orders=orders;
+ var todayKey=dashboardTodayKey(),monthPrefix=todayKey.slice(0,7),monthOrders=orders.filter(function(o){return dashboardDateKey(o.created_at).slice(0,7)===monthPrefix;}),monthItems=[],costsKnown=true;
+ for(var i=0;i<monthOrders.length;i+=100){
+  var ids=monthOrders.slice(i,i+100).map(function(o){return o.id;});
+  var result=await supabaseClient.from("order_items").select("order_id,product_id,product_name_snapshot,unit_price_snapshot,unit_cost_snapshot,quantity").in("order_id",ids).range(0,9999);
+  if(result.error&&/unit_cost_snapshot|column.*does not exist/i.test(result.error.message||"")){costsKnown=false;result=await supabaseClient.from("order_items").select("order_id,product_id,product_name_snapshot,unit_price_snapshot,quantity").in("order_id",ids).range(0,9999);}
+  if(result.error)throw result.error;monthItems=monthItems.concat(result.data||[]);
+ }
+ if(monthItems.some(function(item){return item.unit_cost_snapshot===undefined||item.unit_cost_snapshot===null;}))costsKnown=false;
+ dashboardData.monthItems=monthItems;dashboardData.monthCostsKnown=costsKnown;
+ var top=await supabaseClient.rpc("get_top_selling_products",{limit_count:5});if(top.error)throw top.error;
+ dashboardData.top=top.data||[];
+ renderDashboardSummary();
+}
+function exportDashboardCsv(){
+ var rows=[["Fecha","Total MXN","Estado"],...dashboardData.orders.map(function(o){return [dashboardDateKey(o.created_at),Number(o.total_amount||0).toFixed(2),o.status];})];
+ var csv="\uFEFF"+rows.map(function(row){return row.map(function(value){return '"'+String(value).replace(/"/g,'""')+'"';}).join(",");}).join("\r\n");
+ var link=document.createElement("a");link.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));link.download="floreria-muniz-ventas.csv";link.click();URL.revokeObjectURL(link.href);
+}
+
 function localDateValue(date){var y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,"0"),d=String(date.getDate()).padStart(2,"0");return y+"-"+m+"-"+d;}
 function periodBounds(){
  var mode=document.getElementById("report-period").value;
@@ -273,6 +408,12 @@ async function start(){
  if(!cfg.url||!cfg.anonKey||!window.supabase||!window.supabase.createClient){showSetup();return;}
  supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey);
  document.getElementById("google-login").addEventListener("click",googleLogin);
+ document.getElementById("dashboard-to-reports").addEventListener("click",function(){document.getElementById("sales-report").scrollIntoView({behavior:"smooth"});});
+ document.getElementById("dashboard-to-inventory").addEventListener("click",function(){document.getElementById("product-form").scrollIntoView({behavior:"smooth"});});
+ document.getElementById("dashboard-to-stock").addEventListener("click",function(){document.getElementById("product-rows").scrollIntoView({behavior:"smooth"});});
+ document.getElementById("dashboard-export").addEventListener("click",exportDashboardCsv);
+ document.querySelector(".chart-filter").addEventListener("click",function(event){var button=event.target.closest("[data-chart-days]");if(!button)return;dashboardData.chartDays=Number(button.dataset.chartDays);document.querySelectorAll(".chart-filter button").forEach(function(b){b.classList.toggle("active",b===button);});renderDashboardChart();});
+
  document.getElementById("logout").addEventListener("click",async function(){await supabaseClient.auth.signOut();setLoggedIn(false);});
  document.getElementById("product-form").addEventListener("submit",saveProduct);
  document.getElementById("new-product").addEventListener("click",function(){resetProductForm();document.getElementById("product-form").scrollIntoView({behavior:"smooth"});});
