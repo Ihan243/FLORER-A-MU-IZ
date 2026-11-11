@@ -92,6 +92,9 @@
  .product-card,.product-card-media img,.spotlight-visual img{animation:none!important;transition:none!important}
 }
 </style>
+<style>
+.order-board{display:grid;grid-template-columns:repeat(6,minmax(170px,1fr));gap:10px;margin-top:16px;overflow-x:auto;padding-bottom:6px}.order-lane{min-width:170px;background:#f7f4f1;border:1px solid #eadcda;border-radius:12px;padding:10px}.order-lane h3{margin:0 0 9px;color:#651028;font-size:.9rem}.order-lane-count{color:#877b7c;font-size:.75rem;font-weight:500}.order-board-card{background:#fff;border:1px solid #eadcda;border-radius:10px;padding:10px;margin-bottom:8px}.order-board-card strong{display:block;color:#36272b;overflow-wrap:anywhere}.order-board-card p{margin:5px 0;color:#706466;font-size:.78rem;overflow-wrap:anywhere}.order-board-card select{width:100%;margin-top:7px;padding:7px;border:1px solid #eadcda;border-radius:8px;background:#fff;color:#651028;font-weight:700}.order-board-empty{padding:12px;color:#877b7c;font-size:.8rem}
+</style>
 </head>
 <body>
 <header class="top"><strong>Florería Muñiz · Administración</strong><div class="right"><a href="/">Ver sitio</a><button id="logout" class="button light small hidden" type="button">Cerrar sesión</button></div></header>
@@ -151,13 +154,21 @@
 <div class="form-grid">
 <div class="field"><label for="sale-customer">Nombre del cliente *</label><input id="sale-customer" required maxlength="255"></div>
 <div class="field"><label for="sale-phone">Teléfono (opcional)</label><input id="sale-phone" type="tel" maxlength="50"></div>
-<div class="field"><label for="sale-status">Estado</label><select id="sale-status"><option value="paid">Pagado</option><option value="completed">Completado</option><option value="pending">Pendiente</option><option value="cancelled">Cancelado</option></select></div>
+<div class="field"><label for="sale-status">Estado de pago</label><select id="sale-status"><option value="pending">Pendiente de pago</option><option value="paid">Pagado</option><option value="completed">Completado</option><option value="cancelled">Cancelado</option></select></div>
+<div class="field"><label for="fulfillment-status">Estado del pedido</label><select id="fulfillment-status"><option value="pending">Por confirmar</option><option value="confirmed">Confirmado</option><option value="preparing">En preparación</option><option value="ready">Listo para entregar</option><option value="delivered">Entregado</option><option value="cancelled">Cancelado</option></select></div>
+<div class="field"><label for="sale-scheduled-date">Fecha de entrega (opcional)</label><input id="sale-scheduled-date" type="date"></div>
+<div class="field"><label for="sale-delivery-window">Horario o franja (opcional)</label><input id="sale-delivery-window" maxlength="60" placeholder="Ej. 10:00 a.m. a 1:00 p.m."></div>
+<div class="field full"><label for="sale-order-notes">Dedicatoria e instrucciones (opcional)</label><textarea id="sale-order-notes" maxlength="1000" placeholder="Texto de la tarjeta, colores, entrega anónima u otra indicación"></textarea></div>
 </div>
 <label class="field"><span style="font-weight:700">Productos *</span></label>
 <div id="order-lines"></div>
 <div class="actions"><button id="add-order-line" class="button light small" type="button">Añadir producto</button><button class="button primary" type="submit">Guardar pedido</button></div>
 </form></section>
 </div>
+<section class="card" id="order-board">
+<div class="right" style="justify-content:space-between;flex-wrap:wrap"><div><h2 style="margin:0">Seguimiento de pedidos</h2><p class="hint" style="margin:5px 0 0">Actualiza el avance y revisa las entregas programadas.</p></div><div class="actions"><label class="field" style="margin:0"><span class="sr-only">Filtrar por fecha de entrega</span><input id="orders-date-filter" type="date" aria-label="Filtrar por fecha de entrega"></label><button id="refresh-orders-board" class="button light small" type="button">Actualizar</button></div></div>
+<div id="order-board-list" class="order-board" aria-live="polite"><p class="muted">Cargando pedidos…</p></div>
+</section>
 <section class="card">
 <div class="right" style="justify-content:space-between;flex-wrap:wrap"><h2 style="margin:0">Catálogo</h2><button id="new-product" class="button primary" type="button">Nuevo producto</button></div>
 <div class="grid two catalog-admin-layout" style="margin-top:18px">
@@ -166,7 +177,7 @@
 <input id="product-id" type="hidden">
 <div class="form-grid">
 <div class="field"><label for="product-name">Nombre *</label><input id="product-name" required maxlength="255"></div>
-<div class="field"><label for="product-category">Categoría *</label><input id="product-category" required maxlength="80" placeholder="Ramos buchones"></div>
+<div class="field"><label for="product-category">Categoría *</label><input id="product-category" required maxlength="80" placeholder="Ramos buchones o Complementos"></div>
 <div class="field"><label for="product-price">Precio de venta (MXN) *</label><input id="product-price" type="number" min="0" step="0.01" required></div>
 <div class="field" id="product-cost-wrap"><label for="product-cost">Costo unitario (MXN)</label><input id="product-cost" type="number" min="0" step="0.01" placeholder="Costo de compra"></div>
 <div class="field"><label for="product-stock">Existencias</label><input id="product-stock" type="number" min="0" step="1" value="0"></div>
@@ -380,7 +391,7 @@ async function runSalesReport(){
  }catch(error){showMessage("app-message","No se pudo generar el reporte: "+error.message,"error");}
  finally{button.disabled=false;}
 }
-async function loadAll(){try{hideMessage("app-message");await loadProducts();await loadDashboard();}catch(error){showMessage("app-message","Error al cargar datos: "+error.message,"error");}}
+async function loadAll(){try{hideMessage("app-message");await loadProducts();await loadDashboard();}catch(error){showMessage("app-message","Error al cargar datos: "+error.message,"error");}try{await loadOrderBoard();}catch(error){document.getElementById("order-board-list").innerHTML='<p class="muted">Para activar el seguimiento, ejecuta supabase/add_order_workflow.sql en el SQL Editor de Supabase.</p>';}}
 function makeWebp(file){
  return new Promise(function(resolve,reject){
   if(!file){resolve(null);return;}
@@ -428,9 +439,45 @@ async function recordOrder(event){
  event.preventDefault();var rows=Array.from(document.querySelectorAll(".order-line"));
  var items=rows.map(function(row){return {product_id:row.querySelector(".sale-product").value,quantity:Number(row.querySelector(".sale-quantity").value)};});
  if(!items.length||items.some(function(i){return !i.product_id||!Number.isInteger(i.quantity)||i.quantity<1;})){showMessage("app-message","Agrega al menos un producto y una cantidad válida.","error");return;}
- var result=await supabaseClient.rpc("create_admin_order",{p_customer_name:document.getElementById("sale-customer").value.trim(),p_customer_phone:document.getElementById("sale-phone").value.trim()||null,p_status:document.getElementById("sale-status").value,p_items:items});
- if(result.error){showMessage("app-message","No se pudo registrar el pedido: "+result.error.message,"error");return;}
- document.getElementById("order-form").reset();document.getElementById("order-lines").innerHTML="";addOrderLine();await loadAll();showMessage("app-message","Pedido registrado. Las ventas pagadas o completadas se reflejan en las métricas.","ok");
+ var result=await supabaseClient.rpc("create_admin_order_v2",{
+  p_customer_name:document.getElementById("sale-customer").value.trim(),
+  p_customer_phone:document.getElementById("sale-phone").value.trim()||null,
+  p_payment_status:document.getElementById("sale-status").value,
+  p_fulfillment_status:document.getElementById("fulfillment-status").value,
+  p_scheduled_date:document.getElementById("sale-scheduled-date").value||null,
+  p_delivery_window:document.getElementById("sale-delivery-window").value.trim()||null,
+  p_order_notes:document.getElementById("sale-order-notes").value.trim()||null,
+  p_items:items
+ });
+ if(result.error){showMessage("app-message","No se pudo registrar el pedido. Confirma que ejecutaste supabase/add_order_workflow.sql. "+result.error.message,"error");return;}
+ document.getElementById("order-form").reset();document.getElementById("order-lines").innerHTML="";addOrderLine();await loadAll();showMessage("app-message","Pedido registrado y agregado al seguimiento.","ok");
+}
+var orderStages=[["pending","Por confirmar"],["confirmed","Confirmado"],["preparing","En preparación"],["ready","Listo para entregar"],["delivered","Entregado"],["cancelled","Cancelado"]];
+function orderStageOptions(selected){
+ return orderStages.map(function(stage){return '<option value="'+stage[0]+'"'+(selected===stage[0]?" selected":"")+'>'+stage[1]+'</option>';}).join("");
+}
+async function loadOrderBoard(){
+ var host=document.getElementById("order-board-list");
+ var query=supabaseClient.from("orders").select("id,customer_name,customer_phone,status,total_amount,fulfillment_status,scheduled_date,delivery_window,order_notes,created_at").order("scheduled_date",{ascending:true,nullsFirst:false}).order("created_at",{ascending:false}).limit(300);
+ var date=document.getElementById("orders-date-filter").value;if(date)query=query.eq("scheduled_date",date);
+ var result=await query;if(result.error)throw result.error;
+ var rows=result.data||"";
+ if(!rows.length){host.innerHTML='<p class="order-board-empty">No hay pedidos para mostrar. Registra aquí los pedidos confirmados que recibas por WhatsApp o en tienda.</p>';return;}
+ host.innerHTML=orderStages.map(function(stage){
+  var items=rows.filter(function(order){return (order.fulfillment_status||"pending")===stage[0];});
+  return '<section class="order-lane"><h3>'+stage[1]+' <span class="order-lane-count">('+items.length+')</span></h3>'+
+   (items.length?items.map(function(order){
+    var dateLabel=order.scheduled_date?new Date(order.scheduled_date+"T12:00:00").toLocaleDateString("es-MX",{day:"numeric",month:"short",year:"numeric"}):"Sin fecha";
+    return '<article class="order-board-card"><strong>'+escapeHtml(order.customer_name||"Cliente")+'</strong><p>'+dateLabel+(order.delivery_window?" · "+escapeHtml(order.delivery_window):"")+'</p><p>'+money(Number(order.total_amount)||0)+' · Pago: '+escapeHtml(order.status||"pending")+'</p>'+(order.customer_phone?'<p>'+escapeHtml(order.customer_phone)+'</p>':'')+(order.order_notes?'<p>Nota: '+escapeHtml(order.order_notes)+'</p>':'')+'<select data-order-fulfillment="'+escapeHtml(order.id)+'" aria-label="Cambiar estado de '+escapeHtml(order.customer_name||"pedido")+'">'+orderStageOptions(order.fulfillment_status||"pending")+'</select></article>';
+   }).join(""):'<div class="order-board-empty">Sin pedidos</div>')+'</section>';
+ }).join("");
+}
+async function changeOrderStage(event){
+ var select=event.target.closest("[data-order-fulfillment]");if(!select)return;
+ select.disabled=true;
+ var result=await supabaseClient.from("orders").update({fulfillment_status:select.value}).eq("id",select.dataset.orderFulfillment);
+ if(result.error){showMessage("app-message","No se pudo cambiar el estado del pedido: "+result.error.message,"error");select.disabled=false;return;}
+ showMessage("app-message","Estado del pedido actualizado.","ok");await loadOrderBoard();
 }
 async function start(){
  if(!cfg.url||!cfg.anonKey||!window.supabase||!window.supabase.createClient){showSetup();return;}
@@ -452,6 +499,10 @@ async function start(){
  document.getElementById("products-next").addEventListener("click",function(){productPage++;transitionView(renderProducts);document.getElementById("product-category-tabs").scrollIntoView({behavior:"smooth",block:"nearest"});});
  document.getElementById("add-order-line").addEventListener("click",addOrderLine);
  document.getElementById("order-form").addEventListener("submit",recordOrder);
+ document.getElementById("orders-date-filter").addEventListener("change",loadOrderBoard);
+ document.getElementById("refresh-orders-board").addEventListener("click",loadOrderBoard);
+ document.getElementById("order-board-list").addEventListener("change",changeOrderStage);
+ document.getElementById("sale-scheduled-date").min=localDateValue(new Date());
  document.getElementById("report-reference").value=localDateValue(new Date());
  document.getElementById("report-period").addEventListener("change",function(){var custom=this.value==="custom";document.getElementById("report-reference-wrap").classList.toggle("hidden",custom);document.getElementById("report-from-wrap").classList.toggle("hidden",!custom);document.getElementById("report-to-wrap").classList.toggle("hidden",!custom);});
  document.getElementById("refresh-report").addEventListener("click",runSalesReport);
