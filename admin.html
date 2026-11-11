@@ -10,7 +10,8 @@
 :root{--wine:#651028;--wine-dark:#4c0c1c;--rose:#f7e7e9;--cream:#fffaf7;--paper:#fff;--ink:#292323;--muted:#706466;--green:#496640;--line:#eadcda;--shadow:0 12px 34px #39101b10}
 *{box-sizing:border-box}body{margin:0;background:#f8f3f0;color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:var(--wine);color:#fff;padding:15px max(20px,calc((100% - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:15px}.top strong{font:600 1.25rem Georgia,serif}.top a{color:white}.wrap{width:min(1200px,calc(100% - 32px));margin:26px auto 60px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}.card h2{font:600 1.35rem Georgia,serif;color:var(--wine);margin:0 0 16px}.muted{color:var(--muted)}.hint{font-size:.85rem;color:var(--muted)}.status{padding:12px 15px;border-radius:12px;background:#f6f3e9;color:#564b31;margin:14px 0}.status.error{background:#fae9e8;color:#7c1f26}.status.ok{background:#eaf4e6;color:#345b30}.button{border:0;border-radius:999px;padding:11px 17px;font-weight:700}.primary{background:var(--wine);color:white}.primary:hover{background:var(--wine-dark)}.light{background:var(--rose);color:var(--wine)}.small{font-size:.84rem;padding:7px 12px}.login{max-width:560px;margin:60px auto;text-align:center}.login .button{width:100%;margin-top:14px}.grid{display:grid;gap:18px}.kpis{grid-template-columns:repeat(3,1fr)}.kpi strong{display:block;color:var(--wine);font-size:1.7rem;margin-top:7px}.two{grid-template-columns:1fr 1fr}.field{display:grid;gap:5px;margin-bottom:12px}.field label{font-weight:700;font-size:.9rem}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}.field textarea{min-height:76px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px;margin:10px 0}.check input{accent-color:var(--wine)}.actions{display:flex;gap:8px;flex-wrap:wrap}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:.77rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.catalog-admin-layout{grid-template-columns:minmax(300px,.85fr) minmax(0,2fr);align-items:start}.product-category-tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:thin}.category-tab{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--wine)}.category-tab.active{background:var(--wine);color:#fff}.product-pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:14px}.product-pagination[hidden]{display:none}.product-sections{display:grid;gap:18px;margin-top:12px}.product-category-section{min-width:0}.product-category-heading{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px;padding-bottom:7px;border-bottom:1px solid var(--line)}.product-category-heading h4{margin:0;color:var(--wine);font:600 1.05rem Georgia,serif}.product-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}.product-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 4px 14px #39101b08}.product-card-image{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--rose)}.product-card-body{display:grid;gap:8px;padding:12px}.product-card-title{display:block;color:var(--wine);font:600 1.05rem Georgia,serif;overflow-wrap:anywhere}.product-card-price{color:var(--green);font-weight:700}.product-card-meta{display:flex;justify-content:space-between;gap:8px;font-size:.85rem}.product-card-status{justify-self:start;border-radius:99px;padding:3px 9px;font-size:.75rem;font-weight:700}.product-card-status.is-active{background:#eaf4e6;color:#345b30}.product-card-status.is-hidden{background:#f3eeee;color:var(--muted)}.product-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:3px}.top-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0}.bar-wrap{height:8px;background:#f2e7e7;border-radius:99px;overflow:hidden;margin-top:4px}.bar{height:100%;background:var(--wine);border-radius:99px}.order-line{display:grid;grid-template-columns:1fr 100px auto;gap:8px;margin-bottom:8px}.line-remove{border:1px solid var(--line);background:#fff;border-radius:8px;padding:0 10px;color:var(--wine)}.right{display:flex;gap:9px;align-items:center}.hidden{display:none!important}.footer-note{text-align:center;color:var(--muted);font-size:.84rem;margin-top:24px}
 @media(max-width:760px){.wrap{width:calc(100% - 22px);margin-top:14px}.card{padding:16px}.kpis,.two{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.top{padding:12px 15px}.top strong{font-size:1.05rem}.order-line{grid-template-columns:1fr 75px auto}}
-@media(max-width:1050px){.catalog-admin-layout{grid-template-columns:1fr}}@media(max-width:760px){.product-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.product-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-card-body{padding:9px}.product-card-actions{gap:5px}}@media(max-width:350px){.product-card-grid{grid-template-columns:1fr}}</style>
+@media(max-width:1050px){.catalog-admin-layout{grid-template-columns:1fr}}@media(max-width:760px){.product-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.product-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-card-body{padding:9px}.product-card-actions{gap:5px}}@media(max-width:350px){.product-card-grid{grid-template-columns:1fr}}@media(max-width:760px){.report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}@media print{body{background:#fff!important}.top,.login,.kpis:not(.report-kpis),#app-message,#product-form,.product-category-tabs,#product-rows,#product-pagination,.footer-note,#report-actions,.report-filters,#report-cost-note,#order-form,#top-products{display:none!important}#app-panel>.grid,#app-panel>section:not(#sales-report){display:none!important}#sales-report{display:block!important;position:absolute;left:0;top:0;width:100%;margin:0;padding:0;border:0;box-shadow:none}.report-kpis{grid-template-columns:repeat(4,1fr)!important;gap:8px!important}.report-kpis .card{margin:0;padding:10px;border:1px solid #ddd;box-shadow:none}.report-kpis strong{font-size:1rem}.table-wrap{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px;border-bottom:1px solid #ddd}.card{break-inside:avoid}}
+</style>
 </head>
 <body>
 <header class="top"><strong>Florería Muñiz · Administración</strong><div class="right"><a href="/">Ver sitio</a><button id="logout" class="button light small hidden" type="button">Cerrar sesión</button></div></header>
@@ -30,6 +31,25 @@
 <article class="card kpi"><span class="muted">Unidades vendidas este mes</span><strong id="kpi-units">0</strong></article>
 <article class="card kpi"><span class="muted">Productos con stock bajo (≤ 3)</span><strong id="kpi-low-stock">0</strong></article>
 </div>
+<section id="sales-report" class="card">
+<div class="right" style="justify-content:space-between;flex-wrap:wrap"><div><h2 style="margin:0">Reporte de ventas</h2><p class="hint" style="margin:4px 0 0">Consulta productos vendidos y ganancia bruta por período.</p></div><div id="report-actions" class="actions"><button id="export-sales" class="button light small" type="button">Descargar Excel</button><button id="print-sales" class="button primary small" type="button">Imprimir / guardar PDF</button></div></div>
+<div class="form-grid report-filters" style="margin-top:16px;align-items:end">
+<div class="field"><label for="report-period">Período</label><select id="report-period"><option value="daily">Diario</option><option value="weekly">Semanal</option><option value="monthly" selected>Mensual</option><option value="custom">Personalizado</option></select></div>
+<div class="field" id="report-reference-wrap"><label for="report-reference">Fecha</label><input id="report-reference" type="date"></div>
+<div class="field hidden" id="report-from-wrap"><label for="report-from">Desde</label><input id="report-from" type="date"></div>
+<div class="field hidden" id="report-to-wrap"><label for="report-to">Hasta</label><input id="report-to" type="date"></div>
+<div class="field"><button id="refresh-report" class="button primary" type="button">Ver período</button></div>
+</div>
+<p id="report-range" class="hint"></p>
+<div class="grid kpis report-kpis">
+<article class="card kpi"><span class="muted">Ventas</span><strong id="report-revenue">$0 MXN</strong></article>
+<article class="card kpi"><span class="muted">Costo directo</span><strong id="report-cost">—</strong></article>
+<article class="card kpi"><span class="muted">Ganancia bruta</span><strong id="report-profit">—</strong></article>
+<article class="card kpi"><span class="muted">Unidades · operaciones</span><strong id="report-count">0 · 0</strong></article>
+</div>
+<p id="report-cost-note" class="hint">La ganancia bruta requiere capturar el costo de compra de cada producto.</p>
+<div class="table-wrap"><table id="sales-report-table"><thead><tr><th>Producto vendido</th><th>Cantidad</th><th>Ventas</th><th>Costo directo</th><th>Ganancia bruta</th></tr></thead><tbody id="sales-report-body"><tr><td colspan="5" class="muted">Selecciona un período y pulsa “Ver período”.</td></tr></tbody></table></div>
+</section>
 <div class="grid two">
 <section class="card"><h2>Productos más vendidos</h2><div id="top-products" class="muted">Cargando métricas…</div><p class="hint">Solo considera pedidos pagados o completados.</p></section>
 <section class="card"><h2>Registrar venta o pedido</h2>
@@ -53,7 +73,8 @@
 <div class="form-grid">
 <div class="field"><label for="product-name">Nombre *</label><input id="product-name" required maxlength="255"></div>
 <div class="field"><label for="product-category">Categoría *</label><input id="product-category" required maxlength="80" placeholder="Ramos buchones"></div>
-<div class="field"><label for="product-price">Precio (MXN) *</label><input id="product-price" type="number" min="0" step="0.01" required></div>
+<div class="field"><label for="product-price">Precio de venta (MXN) *</label><input id="product-price" type="number" min="0" step="0.01" required></div>
+<div class="field" id="product-cost-wrap"><label for="product-cost">Costo unitario (MXN)</label><input id="product-cost" type="number" min="0" step="0.01" placeholder="Costo de compra"></div>
 <div class="field"><label for="product-stock">Existencias</label><input id="product-stock" type="number" min="0" step="1" value="0"></div>
 </div>
 <div class="field"><label for="product-description">Descripción</label><textarea id="product-description" maxlength="2000"></textarea></div>
@@ -77,6 +98,8 @@ var loginPanel=document.getElementById("login-panel");
 var appPanel=document.getElementById("app-panel");
 var supabaseClient=null;
 var products=[];
+var costTrackingEnabled=false;
+var currentSalesReport=null;
 var orderLineCount=0;
 var selectedProductCategory="";
 var productPage=1;
@@ -98,7 +121,12 @@ async function checkSession(){
  hideMessage("login-message");setLoggedIn(true);await loadAll();
 }
 async function loadProducts(){
- var result=await supabaseClient.from("products").select("id,catalog_key,name,category,description,price,price_note,image_url,stock,is_active,created_at").order("created_at",{ascending:false});
+ var result=await supabaseClient.from("products").select("id,catalog_key,name,category,description,price,price_note,image_url,stock,is_active,created_at,cost_price").order("created_at",{ascending:false});
+ if(result.error&&/cost_price|column.*does not exist/i.test(result.error.message||"")){
+  costTrackingEnabled=false;
+  document.getElementById("product-cost-wrap").classList.add("hidden");
+  result=await supabaseClient.from("products").select("id,catalog_key,name,category,description,price,price_note,image_url,stock,is_active,created_at").order("created_at",{ascending:false});
+ }else if(!result.error){costTrackingEnabled=true;document.getElementById("product-cost-wrap").classList.remove("hidden");}
  if(result.error)throw result.error;
  products=result.data||[];renderProducts();populateSaleProducts();
 }
@@ -139,6 +167,56 @@ async function loadDashboard(){
  var max=Math.max.apply(null,list.map(function(p){return Number(p.total_units_sold)||0;}))||1;
  target.innerHTML=list.map(function(p){var value=Number(p.total_units_sold)||0;return '<div class="top-row"><div><strong>'+escapeHtml(p.product_name)+'</strong><div class="bar-wrap"><div class="bar" style="width:'+Math.max(3,Math.round(value/max*100))+'%"></div></div></div><div style="text-align:right"><strong>'+value+'</strong><div class="hint">'+money(p.total_revenue)+'</div></div></div>';}).join("");
 }
+function localDateValue(date){var y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,"0"),d=String(date.getDate()).padStart(2,"0");return y+"-"+m+"-"+d;}
+function periodBounds(){
+ var mode=document.getElementById("report-period").value;
+ var ref=document.getElementById("report-reference").value||localDateValue(new Date());
+ var start,end;
+ if(mode==="custom"){
+  var from=document.getElementById("report-from").value,to=document.getElementById("report-to").value;
+  if(!from||!to||from>to)throw new Error("Elige un rango válido, con fecha inicial y final.");
+  start=from;end=to;
+ }else if(mode==="daily"){start=ref;end=ref;}
+ else if(mode==="weekly"){
+  var d=new Date(ref+"T12:00:00"),weekday=(d.getDay()+6)%7;d.setDate(d.getDate()-weekday);start=localDateValue(d);d.setDate(d.getDate()+6);end=localDateValue(d);
+ }else{var d=new Date(ref+"T12:00:00");start=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-01";d.setMonth(d.getMonth()+1,0);end=localDateValue(d);}
+ return {start:start,end:end,mode:mode};
+}
+function reportXmlEscape(value){return String(value==null?"":value).replace(/[&<>\"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];});}
+function downloadSalesExcel(){
+ if(!currentSalesReport){showMessage("app-message","Primero genera el reporte del período.","error");return;}
+ var r=currentSalesReport;function cell(value,type,style){return '<Cell'+(style?' ss:StyleID="'+style+'"':'')+'><Data ss:Type="'+(type||"String")+'">'+reportXmlEscape(value)+'</Data></Cell>';}
+ function row(values){return '<Row>'+values.join("")+'</Row>';}
+ var xml='<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Styles><Style ss:ID="Head"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#651028" ss:Pattern="Solid"/></Style><Style ss:ID="Money"><NumberFormat ss:Format="&quot;$&quot;#,##0.00"/></Style></Styles>';
+ xml+='<Worksheet ss:Name="Resumen"><Table>'+row([cell("Florería Muñiz · Reporte de ventas","String","Head")])+row([cell("Período"),cell(r.start+" a "+r.end)])+row([cell("Ventas"),cell(r.revenue,"Number","Money")])+row([cell("Costo directo"),cell(r.costKnown?r.cost:"Costo pendiente")])+row([cell("Ganancia bruta"),cell(r.profitKnown?r.profit:"Captura costos unitarios")])+row([cell("Unidades vendidas"),cell(r.units,"Number")])+row([cell("Operaciones"),cell(r.orders.length,"Number")])+'</Table></Worksheet>';
+ xml+='<Worksheet ss:Name="Productos vendidos"><Table>'+row(["Producto","Unidades","Ventas MXN","Costo directo MXN","Ganancia bruta MXN"].map(function(x){return cell(x,"String","Head");}));
+ r.rows.forEach(function(x){xml+=row([cell(x.name),cell(x.quantity,"Number"),cell(x.revenue,"Number","Money"),cell(x.costKnown?x.cost:"Pendiente"),cell(x.costKnown?x.profit:"Pendiente")]);});
+ xml+='</Table></Worksheet></Workbook>';
+ var blob=new Blob(["\ufeff",xml],{type:"application/vnd.ms-excel;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="Floreria-Muniz-ventas-"+r.start+"-a-"+r.end+".xls";a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+async function runSalesReport(){
+ var button=document.getElementById("refresh-report");button.disabled=true;
+ try{
+  var range=periodBounds(),from=new Date(range.start+"T00:00:00"),to=new Date(range.end+"T00:00:00");to.setDate(to.getDate()+1);
+  var orders=[],offset=0,page;
+  do{page=await supabaseClient.from("orders").select("id,total_amount,created_at,status").in("status",["paid","completed"]).gte("created_at",from.toISOString()).lt("created_at",to.toISOString()).order("created_at",{ascending:true}).range(offset,offset+999);if(page.error)throw page.error;orders=orders.concat(page.data||[]);offset+=1000;}while((page.data||[]).length===1000);
+  var allItems=[];
+  for(var i=0;i<orders.length;i+=100){var ids=orders.slice(i,i+100).map(function(o){return o.id;}),itemsResult=await supabaseClient.from("order_items").select("order_id,product_name_snapshot,unit_price_snapshot,unit_cost_snapshot,quantity").in("order_id",ids).range(0,999);
+   if(itemsResult.error&&/unit_cost_snapshot|column.*does not exist/i.test(itemsResult.error.message||"")){costTrackingEnabled=false;itemsResult=await supabaseClient.from("order_items").select("order_id,product_name_snapshot,unit_price_snapshot,quantity").in("order_id",ids).range(0,999);}
+   if(itemsResult.error)throw itemsResult.error;allItems=allItems.concat(itemsResult.data||[]);
+  }
+  var byProduct={};allItems.forEach(function(item){var name=item.product_name_snapshot||"Producto sin nombre",qty=Number(item.quantity)||0,price=Number(item.unit_price_snapshot)||0,hasCost=item.unit_cost_snapshot!==undefined&&item.unit_cost_snapshot!==null,cost=hasCost?Number(item.unit_cost_snapshot)*qty:0;if(!byProduct[name])byProduct[name]={name:name,quantity:0,revenue:0,cost:0,costKnown:true,profit:0};var row=byProduct[name];row.quantity+=qty;row.revenue+=price*qty;if(hasCost)row.cost+=cost;else row.costKnown=false;});
+  var rows=Object.keys(byProduct).map(function(name){var x=byProduct[name];x.profit=x.revenue-x.cost;return x;}).sort(function(a,b){return b.quantity-a.quantity||a.name.localeCompare(b.name,"es");});
+  var revenue=rows.reduce(function(sum,x){return sum+x.revenue;},0),units=rows.reduce(function(sum,x){return sum+x.quantity;},0),costKnown=rows.every(function(x){return x.costKnown;}),cost=rows.reduce(function(sum,x){return sum+x.cost;},0);
+  currentSalesReport={start:range.start,end:range.end,revenue:revenue,cost:cost,costKnown:costKnown,profit:revenue-cost,profitKnown:costKnown,units:units,orders:orders,rows:rows};
+  document.getElementById("report-range").textContent="Período: "+range.start+" a "+range.end+" · Solo pedidos pagados o completados.";
+  document.getElementById("report-revenue").textContent=money(revenue);document.getElementById("report-cost").textContent=costKnown?money(cost):"Pendiente";document.getElementById("report-profit").textContent=costKnown?money(revenue-cost):"Completa costos";document.getElementById("report-count").textContent=units.toLocaleString("es-MX")+" · "+orders.length.toLocaleString("es-MX");
+  document.getElementById("report-cost-note").textContent=costKnown?"Ganancia bruta = ventas menos costo directo de los productos. No descuenta otros gastos.":"Para mostrar la ganancia bruta, configura el costo unitario en los productos y aplica la migración indicada en supabase/report-costs-migration.sql. Los costos guardados se conservan como histórico de cada venta.";
+  var body=document.getElementById("sales-report-body");body.innerHTML=rows.length?rows.map(function(x){return '<tr><td>'+escapeHtml(x.name)+'</td><td>'+x.quantity+'</td><td>'+money(x.revenue)+'</td><td>'+ (x.costKnown?money(x.cost):"Pendiente")+'</td><td>'+ (x.costKnown?money(x.profit):"Pendiente")+'</td></tr>';}).join(""):'<tr><td colspan="5" class="muted">No hay ventas pagadas o completadas en este período.</td></tr>';
+  currentSalesReport.rows=rows;
+ }catch(error){showMessage("app-message","No se pudo generar el reporte: "+error.message,"error");}
+ finally{button.disabled=false;}
+}
 async function loadAll(){try{hideMessage("app-message");await loadProducts();await loadDashboard();}catch(error){showMessage("app-message","Error al cargar datos: "+error.message,"error");}}
 function makeWebp(file){
  return new Promise(function(resolve,reject){
@@ -167,13 +245,14 @@ async function saveProduct(event){
   var photo=document.getElementById("product-image").files[0];var imageUrl=existing?existing.image_url:null;
   if(photo)imageUrl=await uploadImage(photo,id);
   var payload={id:id,name:document.getElementById("product-name").value.trim(),category:document.getElementById("product-category").value.trim(),description:document.getElementById("product-description").value.trim(),price:Number(document.getElementById("product-price").value),price_note:document.getElementById("product-note").value.trim()||null,stock:Number(document.getElementById("product-stock").value)||0,is_active:document.getElementById("product-active").checked,image_url:imageUrl};
+  if(costTrackingEnabled)payload.cost_price=(document.getElementById("product-cost").value===""?null:Number(document.getElementById("product-cost").value));
   var result=await supabaseClient.from("products").upsert(payload);if(result.error)throw result.error;
   resetProductForm();await loadAll();showMessage("app-message","Producto guardado y actualizado en el catálogo.","ok");
  }catch(error){showMessage("app-message","No se pudo guardar el producto: "+error.message,"error");}
  finally{button.disabled=false;}
 }
-function resetProductForm(){document.getElementById("product-form").reset();document.getElementById("product-id").value="";document.getElementById("product-stock").value="0";document.getElementById("product-active").checked=true;document.getElementById("product-form-title").textContent="Agregar producto";document.getElementById("product-image").value="";}
-function editProduct(id){var p=products.find(function(item){return item.id===id;});if(!p)return;document.getElementById("product-id").value=p.id;document.getElementById("product-name").value=p.name;document.getElementById("product-category").value=p.category;document.getElementById("product-price").value=p.price;document.getElementById("product-stock").value=p.stock;document.getElementById("product-description").value=p.description||"";document.getElementById("product-note").value=p.price_note||"";document.getElementById("product-active").checked=p.is_active;document.getElementById("product-form-title").textContent="Editar producto";window.scrollTo({top:document.getElementById("product-form").offsetTop-80,behavior:"smooth"});}
+function resetProductForm(){document.getElementById("product-form").reset();document.getElementById("product-id").value="";document.getElementById("product-stock").value="0";document.getElementById("product-cost").value="";document.getElementById("product-active").checked=true;document.getElementById("product-form-title").textContent="Agregar producto";document.getElementById("product-image").value="";}
+function editProduct(id){var p=products.find(function(item){return item.id===id;});if(!p)return;document.getElementById("product-id").value=p.id;document.getElementById("product-name").value=p.name;document.getElementById("product-category").value=p.category;document.getElementById("product-price").value=p.price;document.getElementById("product-cost").value=p.cost_price==null?"":p.cost_price;document.getElementById("product-stock").value=p.stock;document.getElementById("product-description").value=p.description||"";document.getElementById("product-note").value=p.price_note||"";document.getElementById("product-active").checked=p.is_active;document.getElementById("product-form-title").textContent="Editar producto";window.scrollTo({top:document.getElementById("product-form").offsetTop-80,behavior:"smooth"});}
 async function toggleProduct(id){var p=products.find(function(item){return item.id===id;});if(!p)return;var result=await supabaseClient.from("products").update({is_active:!p.is_active}).eq("id",id);if(result.error){showMessage("app-message",result.error.message,"error");return;}await loadAll();}
 function populateSaleProducts(){
  document.querySelectorAll(".sale-product").forEach(function(select){var current=select.value;select.innerHTML='<option value="">Selecciona producto</option>'+products.filter(function(p){return p.is_active;}).map(function(p){return '<option value="'+escapeHtml(p.id)+'">'+escapeHtml(p.name)+' · '+money(p.price)+'</option>';}).join("");select.value=current;});
@@ -204,6 +283,11 @@ async function start(){
  document.getElementById("products-next").addEventListener("click",function(){productPage++;renderProducts();document.getElementById("product-category-tabs").scrollIntoView({behavior:"smooth",block:"nearest"});});
  document.getElementById("add-order-line").addEventListener("click",addOrderLine);
  document.getElementById("order-form").addEventListener("submit",recordOrder);
+ document.getElementById("report-reference").value=localDateValue(new Date());
+ document.getElementById("report-period").addEventListener("change",function(){var custom=this.value==="custom";document.getElementById("report-reference-wrap").classList.toggle("hidden",custom);document.getElementById("report-from-wrap").classList.toggle("hidden",!custom);document.getElementById("report-to-wrap").classList.toggle("hidden",!custom);});
+ document.getElementById("refresh-report").addEventListener("click",runSalesReport);
+ document.getElementById("export-sales").addEventListener("click",downloadSalesExcel);
+ document.getElementById("print-sales").addEventListener("click",function(){window.print();});
  addOrderLine();
  supabaseClient.auth.onAuthStateChange(function(){window.setTimeout(function(){checkSession().catch(function(error){showMessage("login-message",error.message,"error");});},0);});
  try{await checkSession();}catch(error){showMessage("login-message",error.message,"error");}
