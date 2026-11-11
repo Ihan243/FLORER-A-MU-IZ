@@ -35,7 +35,7 @@ function handler(req, res) {
   const machineReadableFiles = {
     '/robots.txt': {
       contentType: 'text/plain; charset=utf-8',
-      body: 'User-agent: *\\nAllow: /\\n',
+      body: 'User-agent: *\nAllow: /\n',
     },
     '/llms.txt': {
       contentType: 'text/plain; charset=utf-8',
