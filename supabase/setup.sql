@@ -51,11 +51,46 @@ CREATE TABLE IF NOT EXISTS public.order_items (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   order_id uuid NOT NULL REFERENCES public.orders(id) ON DELETE RESTRICT,
   product_id uuid REFERENCES public.products(id) ON DELETE SET NULL,
-  product_name_snapshot varchar(255) NOT NULL,
-  unit_price_snapshot numeric(10,2) NOT NULL CHECK (unit_price_snapshot >= 0),
+  product_name_snapshot varchar(255),
+  unit_price_snapshot numeric(10,2),
   quantity integer NOT NULL CHECK (quantity > 0),
   created_at timestamptz NOT NULL DEFAULT now()
 );
+
+-- Bring forward tables created from the earlier draft schema, if present.
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS updated_at timestamptz NOT NULL DEFAULT now();
+ALTER TABLE public.orders ALTER COLUMN customer_phone DROP NOT NULL;
+ALTER TABLE public.order_items ADD COLUMN IF NOT EXISTS product_name_snapshot varchar(255);
+ALTER TABLE public.order_items ADD COLUMN IF NOT EXISTS unit_price_snapshot numeric(10,2);
+
+DO $
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema='public' AND table_name='order_items' AND column_name='unit_price'
+  ) THEN
+    EXECUTE 'UPDATE public.order_items SET unit_price_snapshot=coalesce(unit_price_snapshot,unit_price,0) WHERE unit_price_snapshot IS NULL';
+  ELSE
+    UPDATE public.order_items SET unit_price_snapshot=coalesce(unit_price_snapshot,0) WHERE unit_price_snapshot IS NULL;
+  END IF;
+END;
+$;
+UPDATE public.order_items oi
+SET product_name_snapshot=coalesce(p.name,'Producto eliminado')
+FROM public.products p
+WHERE oi.product_id=p.id AND oi.product_name_snapshot IS NULL;
+UPDATE public.order_items
+SET product_name_snapshot='Producto eliminado'
+WHERE product_name_snapshot IS NULL;
+ALTER TABLE public.order_items ALTER COLUMN product_name_snapshot SET NOT NULL;
+ALTER TABLE public.order_items ALTER COLUMN unit_price_snapshot SET NOT NULL;
+
+ALTER TABLE public.order_items DROP CONSTRAINT IF EXISTS order_items_order_id_fkey;
+ALTER TABLE public.order_items ADD CONSTRAINT order_items_order_id_fkey
+  FOREIGN KEY (order_id) REFERENCES public.orders(id) ON DELETE RESTRICT;
+ALTER TABLE public.order_items DROP CONSTRAINT IF EXISTS order_items_product_id_fkey;
+ALTER TABLE public.order_items ADD CONSTRAINT order_items_product_id_fkey
+  FOREIGN KEY (product_id) REFERENCES public.products(id) ON DELETE SET NULL;
 
 CREATE INDEX IF NOT EXISTS order_items_order_id_idx ON public.order_items(order_id);
 CREATE INDEX IF NOT EXISTS order_items_product_id_idx ON public.order_items(product_id);
