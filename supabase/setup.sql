@@ -63,7 +63,7 @@ ALTER TABLE public.orders ALTER COLUMN customer_phone DROP NOT NULL;
 ALTER TABLE public.order_items ADD COLUMN IF NOT EXISTS product_name_snapshot varchar(255);
 ALTER TABLE public.order_items ADD COLUMN IF NOT EXISTS unit_price_snapshot numeric(10,2);
 
-DO $
+DO $migration$
 BEGIN
   IF EXISTS (
     SELECT 1 FROM information_schema.columns
@@ -74,7 +74,7 @@ BEGIN
     UPDATE public.order_items SET unit_price_snapshot=coalesce(unit_price_snapshot,0) WHERE unit_price_snapshot IS NULL;
   END IF;
 END;
-$;
+$migration$;
 UPDATE public.order_items oi
 SET product_name_snapshot=coalesce(p.name,'Producto eliminado')
 FROM public.products p
