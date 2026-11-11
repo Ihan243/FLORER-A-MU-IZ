@@ -19,6 +19,7 @@ const MIME_TYPES = {
 
 // Cache index.html in memory
 const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'));
+const privacyHtml = fs.readFileSync(path.join(__dirname, 'aviso-privacidad.html'));
 
 function handler(req, res) {
   const cleanUrl = decodeURIComponent((req.url || '/').split('?')[0]);
@@ -29,6 +30,15 @@ function handler(req, res) {
       'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
     });
     return res.end(indexHtml);
+  }
+
+  // Always serve the full privacy notice at its public URL.
+  if (cleanUrl === '/aviso-privacidad.html') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    });
+    return res.end(privacyHtml);
   }
 
   // Attempt to serve static file from disk
