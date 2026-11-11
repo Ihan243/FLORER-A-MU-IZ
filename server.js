@@ -32,6 +32,15 @@ function handler(req, res) {
     return res.end(indexHtml);
   }
 
+  // Serve crawler rules as plain text instead of the SPA fallback.
+  if (cleanUrl === '/robots.txt') {
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'public, max-age=86400',
+    });
+    return res.end('User-agent: *\nAllow: /\n');
+  }
+
   // Always serve the full privacy notice at its public URL.
   if (cleanUrl === '/aviso-privacidad.html') {
     res.writeHead(200, {
