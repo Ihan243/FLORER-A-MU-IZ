@@ -460,3 +460,20 @@ REVOKE ALL ON FUNCTION public.create_admin_order_v2(text,text,public.order_statu
 GRANT EXECUTE ON FUNCTION public.create_admin_order_v2(text,text,public.order_status,text,date,text,text,jsonb) TO authenticated;
 
 COMMIT;
+
+
+-- Dates when deliveries are unavailable, configurable by an administrator.
+CREATE TABLE IF NOT EXISTS public.delivery_blackouts (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  blocked_date date NOT NULL UNIQUE,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE public.delivery_blackouts ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS delivery_blackouts_public_read ON public.delivery_blackouts;
+CREATE POLICY delivery_blackouts_public_read ON public.delivery_blackouts
+  FOR SELECT TO anon, authenticated USING (true);
+DROP POLICY IF EXISTS delivery_blackouts_admin_all ON public.delivery_blackouts;
+CREATE POLICY delivery_blackouts_admin_all ON public.delivery_blackouts
+  FOR ALL TO authenticated USING (public.is_admin()) WITH CHECK (public.is_admin());
+GRANT SELECT ON public.delivery_blackouts TO anon, authenticated;
+GRANT INSERT, UPDATE, DELETE ON public.delivery_blackouts TO authenticated;
