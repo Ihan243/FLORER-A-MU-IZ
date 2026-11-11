@@ -357,7 +357,7 @@ function productDisplayDescription(product){
 function productImageAlt(product){
   const labels={"Ramos buchones":"Ramo tipo buchón","Ramos y arreglos":"Ramo o arreglo floral","Fúnebres":"Arreglo floral fúnebre","Especiales":"Diseño floral especial","Cruces":"Arreglo floral en cruz","Pie de caja":"Arreglo floral de pie de caja","Cubre caja":"Arreglo floral para cubrir caja","Caballetes":"Arreglo floral en caballete","Confitería":"Detalle de confitería"};
   const reference=productReferenceLabel(product);
-  return (labels[product.category]||"Producto floral")+(reference?", "+reference.toLocaleLowerCase("es-MX"):"");
+  return (labels[product.category]||"Producto floral")+(reference?", "+reference.toLocaleLowerCase("es-MX"):", "+cleanProductCopy(product.name));
 }
 function renderFilters(){
   const categories = ["Todos", ...new Set(PRODUCTS.map((product) => product.category))];
