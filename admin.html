@@ -290,10 +290,11 @@ async function loadDashboard(){
   if(result.error&&/unit_cost_snapshot|column.*does not exist/i.test(result.error.message||"")){costsKnown=false;result=await supabaseClient.from("order_items").select("order_id,product_id,product_name_snapshot,unit_price_snapshot,quantity").in("order_id",ids).range(0,9999);}
   if(result.error)throw result.error;monthItems=monthItems.concat(result.data||[]);
  }
- if(monthItems.some(function(item){return item.unit_cost_snapshot===undefined||item.unit_cost_snapshot===null;}))costsKnown=false;
+ if(monthItems.length&&monthItems.some(function(item){return item.unit_cost_snapshot===undefined||item.unit_cost_snapshot===null;}))costsKnown=false;
  dashboardData.monthItems=monthItems;dashboardData.monthCostsKnown=costsKnown;
- var top=await supabaseClient.rpc("get_top_selling_products",{limit_count:5});if(top.error)throw top.error;
- dashboardData.top=top.data||[];
+ var byProduct={};
+ monthItems.forEach(function(item){var key=item.product_id||item.product_name_snapshot||"unknown";if(!byProduct[key])byProduct[key]={product_id:item.product_id,product_name:item.product_name_snapshot||"Producto",total_units_sold:0,total_revenue:0};byProduct[key].total_units_sold+=Number(item.quantity||0);byProduct[key].total_revenue+=Number(item.unit_price_snapshot||0)*Number(item.quantity||0);});
+ dashboardData.top=Object.keys(byProduct).map(function(key){return byProduct[key];}).sort(function(a,b){return b.total_units_sold-a.total_units_sold;}).slice(0,5);
  renderDashboardSummary();
 }
 function exportDashboardCsv(){
