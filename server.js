@@ -53,7 +53,11 @@ function handler(req, res) {
   const machineReadableFiles = {
     '/robots.txt': {
       contentType: 'text/plain; charset=utf-8',
-      body: 'User-agent: *\nAllow: /\n',
+      body: 'User-agent: *\nAllow: /\nSitemap: https://florer-a-mu-iz.vercel.app/sitemap.xml\n',
+    },
+    '/sitemap.xml': {
+      contentType: 'application/xml; charset=utf-8',
+      body: '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://florer-a-mu-iz.vercel.app/</loc></url>\n  <url><loc>https://florer-a-mu-iz.vercel.app/aviso-privacidad.html</loc></url>\n</urlset>\n',
     },
     '/llms.txt': {
       contentType: 'text/plain; charset=utf-8',
