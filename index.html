@@ -141,6 +141,9 @@
  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
 }
 </style>
+<style>
+.quote-addons{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}.quote-addons h3{margin:0;color:var(--wine);font:600 1.1rem Georgia,serif}.quote-addon-list{display:grid;gap:9px;margin-top:10px}.quote-addon{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}.quote-addon-info{display:flex;align-items:center;gap:10px;min-width:0}.quote-addon-info img{width:48px;height:48px;object-fit:cover;border-radius:8px;background:var(--rose)}.quote-addon-info strong{display:block;color:var(--ink)}.quote-addon-info small{color:var(--muted)}.quote-addon button{flex:0 0 auto;border:0;border-radius:999px;padding:8px 12px;background:var(--wine);color:#fff;font-weight:700;cursor:pointer}
+</style>
 </head>
 <body>
 <script>
@@ -201,7 +204,7 @@ let PRODUCTS = [...FALLBACK_PRODUCTS];
 <section class="view" id="quote-view" hidden>
   <div class="wrap"><header class="page-head"><div class="eyebrow">Tu selección</div><h1>Cotizador</h1><p>Revisa tus productos, indica cómo deseas recibirlos y envía la solicitud por WhatsApp.</p></header>
     <div class="quote-section"><div class="quote-layout">
-      <section class="panel"><h2>Productos elegidos</h2><div id="quote-items"></div><div class="quote-total"><span>Subtotal estimado de productos</span><span id="quote-total">$0 MXN</span></div><p class="estimate">Precios del catálogo 2026, sujetos a confirmación. El costo de envío se muestra por separado y no está incluido en el subtotal.</p></section>
+      <section class="panel"><h2>Productos elegidos</h2><div id="quote-items"></div><div class="quote-total"><span>Subtotal estimado de productos</span><span id="quote-total">$0 MXN</span></div><p class="estimate">Precios del catálogo 2026, sujetos a confirmación. El costo de envío se muestra por separado y no está incluido en el subtotal.</p><section class="quote-addons" id="quote-addons" hidden><h3>Completa tu regalo</h3><p class="tiny">Agrega un detalle opcional. La florería confirma su disponibilidad.</p><div id="quote-addon-list" class="quote-addon-list"></div></section></section>
       <form class="panel" id="quote-form" novalidate>
         <h2>Entrega y contacto</h2>
         <span class="group-label">¿Cómo deseas recibir tu pedido? <span aria-hidden="true">*</span></span>
@@ -218,7 +221,7 @@ let PRODUCTS = [...FALLBACK_PRODUCTS];
         <div class="shipping-summary" id="shipping-summary" hidden><strong id="shipping-price"></strong><p id="shipping-policy"></p></div>
         <div class="form-grid">
           <div class="field full"><label for="customer-name">Nombre *</label><input id="customer-name" autocomplete="name" placeholder="Tu nombre"></div>
-          <div class="field full"><label for="requested-date">Fecha y hora deseadas (opcional)</label><input id="requested-date" type="datetime-local"></div>
+          <div class="field"><label for="requested-date">Fecha preferida (opcional)</label><input id="requested-date" type="date"></div><div class="field"><label for="requested-window">Horario preferido (opcional)</label><input id="requested-window" maxlength="60" placeholder="Ej. 10:00 a.m. a 1:00 p.m."></div><p class="tiny full">La fecha y el horario se solicitan como preferencia; la florería confirmará disponibilidad por WhatsApp.</p>
           <div class="field full"><label for="customer-phone">Teléfono (opcional)</label><input id="customer-phone" type="tel" autocomplete="tel" placeholder="Tu número de contacto"></div>
           <div class="field full"><label for="customer-notes">Notas (opcional)</label><textarea id="customer-notes" placeholder="Dedicatoria, colores, fecha deseada u otra indicación"></textarea></div>
         </div>
@@ -420,7 +423,12 @@ function validateForm(){
   const address=document.getElementById("delivery-address").value.trim();
   const municipality=document.getElementById("delivery-city").value.trim();
   const consent=document.getElementById("privacy-consent").checked;
-  const valid=hasProducts&&!!mode&&!!name&&(mode!=="home"||(!!municipality&&!!address||!!municipality&&!!currentLocationUrl))&&consent;
+  const requestedDate=document.getElementById("requested-date").value;
+  const requestedWindow=document.getElementById("requested-window").value.trim();
+  const scheduleValid=(!requestedDate&&!requestedWindow)||(!!requestedDate&&!!requestedWindow&&requestedDate>=todayLocalDate());
+  const valid=hasProducts&&!!mode&&!!name&&(mode!=="home"||(!!municipality&&!!address||!!municipality&&!!currentLocationUrl))&&scheduleValid&&consent;
+  const help=document.getElementById("form-help");
+  help.textContent=scheduleValid?"":"Elige una fecha de hoy o posterior y escribe el horario preferido para solicitar la entrega.";
   document.getElementById("send-button").disabled=!valid;
   return valid;
 }
@@ -435,6 +443,7 @@ function renderQuote(){
       return '<div class="quote-row"><div class="quote-product"><img class="quote-thumb" width="64" height="64" style="view-transition-name:product-photo-'+String(product.id).replace(/[^A-Za-z0-9_-]/g,"-")+'" src="'+escapeHtml(product.image)+'" alt="'+escapeHtml(productImageAlt(product))+'" loading="lazy"><div><div class="quote-title">'+escapeHtml(productDisplayName(product))+'</div><div class="quote-meta">Unitario: '+money(product.price)+' · Subtotal: <strong>'+money(product.price*item.quantity)+'</strong></div>'+(product.note?'<div class="tiny">'+escapeHtml(product.note)+'</div>':'')+'</div></div><div class="quote-controls"><label class="tiny" for="qty-'+escapeHtml(id)+'">Cant.</label><input class="quantity" id="qty-'+escapeHtml(id)+'" type="number" min="1" max="99" value="'+item.quantity+'" data-quantity="'+escapeHtml(id)+'" aria-label="Cantidad de '+escapeHtml(productDisplayName(product))+'"><button class="remove" type="button" data-remove="'+escapeHtml(id)+'" aria-label="Quitar '+escapeHtml(productDisplayName(product))+'">×</button></div></div>';
     }).join("");
   }
+  renderQuoteAddons();
   document.getElementById("quote-total").textContent=money(subtotalProducts());
   document.querySelectorAll("[data-quantity]").forEach((input)=>input.addEventListener("change",()=>{const entry=cart.get(input.dataset.quantity);if(!entry)return;entry.quantity=Math.min(99,Math.max(1,Number(input.value)||1));renderQuote();updateCounts();validateForm();}));
   document.querySelectorAll("[data-remove]").forEach((button)=>button.addEventListener("click",()=>{cart.delete(button.dataset.remove);renderQuote();updateCounts();validateForm();}));
@@ -442,6 +451,26 @@ function renderQuote(){
   updateCounts();
   updateShippingSummary();
   validateForm();
+}
+function todayLocalDate(){
+  const date=new Date();
+  date.setMinutes(date.getMinutes()-date.getTimezoneOffset());
+  return date.toISOString().slice(0,10);
+}
+function renderQuoteAddons(){
+  const panel=document.getElementById("quote-addons"),holder=document.getElementById("quote-addon-list");
+  const extras=PRODUCTS.filter((product)=>String(product.category||"").trim().toLocaleLowerCase("es-MX")==="complementos");
+  panel.hidden=!extras.length;
+  if(!extras.length){holder.innerHTML="";return;}
+  holder.innerHTML=extras.map((product)=>{
+    const count=cart.get(product.id)?.quantity||0;
+    return '<div class="quote-addon"><div class="quote-addon-info"><img src="'+escapeHtml(product.image)+'" alt="" loading="lazy"><div><strong>'+escapeHtml(productDisplayName(product))+'</strong><small>'+money(product.price)+(count?" · En la cotización: "+count:"")+'</small></div></div><button type="button" data-add-extra="'+escapeHtml(product.id)+'">'+(count?"Agregar otro":"Agregar")+'</button></div>';
+  }).join("");
+  holder.querySelectorAll("[data-add-extra]").forEach((button)=>button.addEventListener("click",()=>{
+    const id=button.dataset.addExtra,existing=cart.get(id);
+    cart.set(id,{quantity:existing?existing.quantity+1:1});
+    renderQuote();updateCounts();validateForm();
+  }));
 }
 function deliveryType(){const selected=document.querySelector('input[name="delivery"]:checked');return selected?selected.value:"";}
 function makeWhatsAppMessage(){
@@ -466,9 +495,13 @@ function makeWhatsAppMessage(){
   lines.push("","Nombre: "+document.getElementById("customer-name").value.trim());
   const phone=document.getElementById("customer-phone").value.trim();
   const requestedDate=document.getElementById("requested-date").value;
+  const requestedWindow=document.getElementById("requested-window").value.trim();
   const notes=document.getElementById("customer-notes").value.trim();
   if(phone)lines.push("Teléfono: "+phone);
-  if(requestedDate)lines.push("Fecha y hora deseadas: "+requestedDate);
+  if(requestedDate){
+    const dateLabel=new Date(requestedDate+"T12:00:00").toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    lines.push("Fecha preferida: "+dateLabel+(requestedWindow?" · Horario preferido: "+requestedWindow:""));
+  }
   if(notes)lines.push("Notas: "+notes);
   lines.push("","La disponibilidad, el precio final y la entrega deben confirmarse con la florería. Los precios corresponden al catálogo 2026 y pueden cambiar.");
   return lines.join("\n");
@@ -488,7 +521,7 @@ document.querySelectorAll('input[name="delivery"]').forEach((radio)=>radio.addEv
   updateShippingSummary();
   validateForm();
 }));
-["customer-name","customer-phone","customer-notes","delivery-address","delivery-city","requested-date","privacy-consent"].forEach((id)=>document.getElementById(id).addEventListener("input",()=>{updateShippingSummary();validateForm();}));
+["customer-name","customer-phone","customer-notes","delivery-address","delivery-city","requested-date","requested-window","privacy-consent"].forEach((id)=>document.getElementById(id).addEventListener("input",()=>{updateShippingSummary();validateForm();}));
 document.getElementById("privacy-consent").addEventListener("change",validateForm);
 document.getElementById("location-button").addEventListener("click",()=>{
   const status=document.getElementById("location-status");
