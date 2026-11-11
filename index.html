@@ -333,10 +333,10 @@ function showView(view){
   });
 }
 function cleanProductCopy(value){
-  return String(value||"").replace(/\\bchcolates\\b/gi,"chocolates").replace(/\\bBombon\\b/gi,"Bombón").trim();
+  return String(value||"").replace(/\bchcolates\b/gi,"chocolates").replace(/\bBombon\b/gi,"Bombón").trim();
 }
 function productReferenceLabel(product){
-  const match=cleanProductCopy(product.name).match(/Referencia\\s*#\\s*(\\d+)/i);
+  const match=cleanProductCopy(product.name).match(/Referencia\s*#\s*(\d+)/i);
   return match?"Referencia #"+String(Number(match[1])).padStart(2,"0"):"";
 }
 function productDisplayName(product){
