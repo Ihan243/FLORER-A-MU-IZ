@@ -320,12 +320,19 @@ function setLanguage(next){
   if(next!=="es"&&next!=="en")return;
   language=next;
   try{localStorage.setItem("floreria-muniz-language",language);}catch(error){}
-  if(onChange)onChange(language);
   apply();
+  if(onChange){
+    try{onChange(language);}catch(error){console.error("Language-dependent rendering failed:",error);}
+    apply();
+  }
 }
 function init(callback){
   onChange=typeof callback==="function"?callback:null;
-  document.querySelectorAll("[data-lang]").forEach(btn=>btn.addEventListener("click",()=>setLanguage(btn.dataset.lang)));
+  document.addEventListener("click",(event)=>{
+    const target=event.target;
+    const btn=target&&target.closest?target.closest("[data-lang]"):null;
+    if(btn){event.preventDefault();setLanguage(btn.dataset.lang);}
+  });
   let preferred="es";
   try{preferred=localStorage.getItem("floreria-muniz-language")==="en"?"en":"es";}catch(error){}
   setLanguage(preferred);
