@@ -109,6 +109,13 @@
 .footer-credit{white-space:nowrap;color:var(--muted)}
 .footer-credit a{color:var(--wine);font-weight:700;text-decoration:none;text-underline-offset:3px}
 .footer-credit a:hover,.footer-credit a:focus-visible{text-decoration:underline}
+.lang-switch{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:#fff;flex-shrink:0}
+.lang-switch button{border:0;background:transparent;border-radius:999px;min-width:32px;padding:7px 9px;color:var(--wine);font-size:.76rem;font-weight:700;line-height:1.2;cursor:pointer}
+.lang-switch button.selected{color:#fff;background:var(--wine)}
+.lang-switch button:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+.mobile-admin{display:block;padding:10px 0;border-top:1px solid var(--line);text-align:left;text-decoration:none;color:var(--wine);font-weight:700}
+@media(max-width:650px){.nav{gap:8px}.actions{gap:6px}.actions>.btn-primary{display:none}.lang-switch button{min-width:30px;padding:7px}.brand-logo{max-width:124px}}
+@media(min-width:981px){.mobile-admin{display:none}}
 @media(max-width:560px){.footer-signature{justify-content:flex-start}}
 .floating-whatsapp{position:fixed;right:18px;bottom:18px;z-index:6;background:var(--green);color:#fff;box-shadow:var(--shadow)}
 .floating-quote{bottom:76px}
@@ -175,10 +182,10 @@ let PRODUCTS = [...FALLBACK_PRODUCTS];
     <nav class="navlinks" aria-label="Navegación principal">
       <button class="active" data-view="home">Inicio</button><button data-view="catalog">Catálogo</button><button data-view="quote">Cotizador <span id="cart-count"></span></button>
     </nav>
-    <div class="actions"><button class="btn btn-light" data-view="catalog">Ver catálogo</button><a class="btn btn-primary" href="/admin.html" aria-label="Abrir panel de administración">Administración</a><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Abrir menú">☰</button></div>
+    <div class="actions"><div class="lang-switch" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-label="Español" aria-pressed="true" class="selected">ES</button><button type="button" data-lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="btn btn-light" data-view="catalog">Ver catálogo</button><a class="btn btn-primary" href="/admin.html" aria-label="Abrir panel de administración">Administración</a><button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Abrir menú">☰</button></div>
   </div>
   <nav class="wrap mobile-links" id="mobile-links" aria-label="Menú móvil">
-    <button data-view="home">Inicio</button><button data-view="catalog">Catálogo</button><button data-view="quote">Cotizador <span id="mobile-cart-count"></span></button>
+    <button data-view="home">Inicio</button><button data-view="catalog">Catálogo</button><button data-view="quote">Cotizador <span id="mobile-cart-count"></span></button><a class="mobile-admin" href="/admin.html">Administración</a>
   </nav>
 </header>
 <main>
@@ -256,6 +263,7 @@ let PRODUCTS = [...FALLBACK_PRODUCTS];
 <button class="btn btn-primary floating-quote" id="floating-quote" data-view="quote" hidden>Cotización <span id="floating-count">0</span></button>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/supabase-config.js"></script>
+<script src="/i18n.js"></script>
 <script>
 const cart = new Map();
 let activeView = "home";
@@ -453,7 +461,7 @@ function renderQuote(){
   document.getElementById("quote-total").textContent=money(subtotalProducts());
   document.querySelectorAll("[data-quantity]").forEach((input)=>input.addEventListener("change",()=>{const entry=cart.get(input.dataset.quantity);if(!entry)return;entry.quantity=Math.min(99,Math.max(1,Number(input.value)||1));renderQuote();updateCounts();validateForm();}));
   document.querySelectorAll("[data-remove]").forEach((button)=>button.addEventListener("click",()=>{cart.delete(button.dataset.remove);renderQuote();updateCounts();validateForm();}));
-  document.querySelectorAll('[data-view="catalog"]').forEach((button)=>button.addEventListener("click",()=>showView("catalog")));
+  holder.querySelectorAll('[data-view="catalog"]').forEach((button)=>button.addEventListener("click",()=>showView("catalog")));
   updateCounts();
   updateShippingSummary();
   validateForm();
@@ -548,6 +556,13 @@ document.getElementById("quote-form").addEventListener("submit",(event)=>{
   window.location.assign(url);
 });
 applyBusinessInfo();
+window.siteI18n.init(()=>{
+  applyBusinessInfo();
+  renderCatalog();
+  if(activeView==="quote")renderQuote();
+  updateShippingSummary();
+  validateForm();
+});
 updateCounts();
 loadPublicCatalogFromSupabase();
 </script>
