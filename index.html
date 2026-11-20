@@ -386,7 +386,7 @@ function renderFilters(){
 function renderCatalog(){
   renderFilters();
   const search=document.getElementById("search").value.trim().toLocaleLowerCase("es-MX");
-  const products=PRODUCTS.filter((product)=>(selectedCategory==="Todos"||product.category===selectedCategory)&&(product.name+" "+product.description+" "+product.category+" "+product.id).toLocaleLowerCase("es-MX").includes(search));
+  const products=PRODUCTS.filter((product)=>(selectedCategory==="Todos"||product.category===selectedCategory)&&window.siteI18n.searchText(product.name+" "+product.description+" "+product.category+" "+product.id).toLocaleLowerCase(window.siteI18n.isEnglish?"en-US":"es-MX").includes(search));
   const grid=document.getElementById("catalog-grid");
   if(!products.length){grid.innerHTML='<p class="empty-search">No encontramos referencias con esa búsqueda.</p>';return;}
   grid.innerHTML=products.map((product)=>
@@ -552,7 +552,7 @@ document.getElementById("location-button").addEventListener("click",()=>{
 document.getElementById("quote-form").addEventListener("submit",(event)=>{
   event.preventDefault();
   if(!validateForm())return;
-  const url="https://wa.me/"+BUSINESS_INFO.whatsapp+"?text="+encodeURIComponent(makeWhatsAppMessage());
+  const url="https://wa.me/"+BUSINESS_INFO.whatsapp+"?text="+encodeURIComponent(window.siteI18n.t(makeWhatsAppMessage()));
   window.location.assign(url);
 });
 applyBusinessInfo();
