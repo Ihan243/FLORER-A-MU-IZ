@@ -231,32 +231,78 @@ const en={
   "Última actualización:": "Last updated:",
   "8 de noviembre de 2026.": "November 8, 2026."
 };
-const nodes=[];
-const attributes=[];
-const excluded="#location-status,#home-address,#shop-details,#footer-address,#footer-copy-name,#map-address-label,#hours-week,#hours-sunday,#footer-hours-week,#footer-hours-sunday,#quote-total,#shipping-price,#shipping-policy,#form-help,#cart-count,#mobile-cart-count,#floating-count";
+const originalText=new WeakMap();
+const originalAttributes=new WeakMap();
+const textKeys=Object.keys(en).sort((a,b)=>b.length-a.length);
 let language="es";
 let onChange=null;
+let observer=null;
 const hasOwn=(key)=>Object.prototype.hasOwnProperty.call(en,key);
-function translated(text){return language==="en" && hasOwn(text)?en[text]:text;}
-function capture(root=document.body){
-  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+function localized(value){
+  const raw=String(value==null?"":value);
+  if(language!=="en"||!raw.trim())return raw;
+  const trimmed=raw.trim();
+  if(hasOwn(trimmed)){
+    const start=raw.indexOf(trimmed);
+    return raw.slice(0,start)+en[trimmed]+raw.slice(start+trimmed.length);
+  }
+  let result=raw;
+  // Longest phrases first, so translated headings do not get partially replaced.
+  for(const key of textKeys){
+    if(result.includes(key))result=result.split(key).join(en[key]);
+  }
+  // Fallback descriptions in the 2026 reference catalog contain variable IDs.
+  result=result.replace(/ del catálogo 2026/gi," from the 2026 catalog");
+  result=result.replace(/Las flores, colores y envoltura dependen de la disponibilidad\./gi,"Flowers, colors and wrapping depend on availability.");
+  result=result.replace(/Producto del Catálogo (Ramos y arreglos|Fúnebre) 2026\./gi,(_,group)=>"Product from the 2026 "+(group==="Fúnebre"?"funeral flowers":"bouquets and arrangements")+" catalog.");
+  result=result.replace(/\bReferencia\s*#/gi,"Reference #");
+  result=result.replace(/\bRamo de rosas rojas\b/gi,"Red rose bouquet");
+  result=result.replace(/\bRamo de rosas\b/gi,"Rose bouquet");
+  result=result.replace(/\bArreglo de rosas\b/gi,"Rose arrangement");
+  return result;
+}
+function translateNode(node){
+  if(node.nodeType!==3||!node.parentElement||node.parentElement.closest("script,style,noscript"))return;
+  const current=node.nodeValue;
+  let entry=originalText.get(node);
+  if(!entry||entry.shown!==current){
+    entry={source:current,shown:current};
+    originalText.set(node,entry);
+  }
+  const result=localized(entry.source);
+  entry.shown=result;
+  if(current!==result)node.nodeValue=result;
+}
+const attrNames=["placeholder","aria-label","title","alt"];
+function translateAttrs(el){
+  if(el.nodeType!==1||el.closest("script,style,noscript"))return;
+  let saved=originalAttributes.get(el);
+  if(!saved){saved=new Map();originalAttributes.set(el,saved);}
+  for(const attr of attrNames){
+    if(!el.hasAttribute(attr))continue;
+    const current=el.getAttribute(attr);
+    let entry=saved.get(attr);
+    if(!entry||entry.shown!==current){
+      entry={source:current,shown:current};
+      saved.set(attr,entry);
+    }
+    const result=localized(entry.source);
+    entry.shown=result;
+    if(current!==result)el.setAttribute(attr,result);
+  }
+}
+function scan(root){
+  if(!root)return;
+  if(root.nodeType===3){translateNode(root);return;}
+  if(root.nodeType!==1&&root.nodeType!==9&&root.nodeType!==11)return;
+  if(root.nodeType===1&&root.matches("script,style,noscript"))return;
+  if(root.nodeType===1)translateAttrs(root);
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT);
   let node;
   while((node=walker.nextNode())){
-    const parent=node.parentElement;
-    if(!parent||parent.closest("script,style,noscript,"+excluded))continue;
-    const content=node.nodeValue;
-    const key=content.trim();
-    if(key&&hasOwn(key))nodes.push({node,original:content,key});
+    if(node.nodeType===3)translateNode(node);
+    else translateAttrs(node);
   }
-  root.querySelectorAll("[placeholder],[aria-label],[title],[alt]").forEach((element)=>{
-    if(element.matches(excluded))return;
-    for(const attr of ["placeholder","aria-label","title","alt"]){
-      if(element.hasAttribute(attr)){
-        const original=element.getAttribute(attr);
-        if(hasOwn(original))attributes.push({element,attr,original});
-      }
-    }
-  });
 }
 function apply(){
   document.documentElement.lang=language;
@@ -265,35 +311,40 @@ function apply(){
     btn.setAttribute("aria-pressed",String(active));
     btn.classList.toggle("selected",active);
   });
-  for(const item of nodes){
-    if(item.node.isConnected){
-      const m=item.original.match(/^(\s*)([\s\S]*?)(\s*)$/);
-      item.node.nodeValue=m[1]+translated(item.key)+m[3];
-    }
-  }
-  for(const item of attributes){
-    if(item.element.isConnected)item.element.setAttribute(item.attr,translated(item.original));
-  }
+  scan(document.body);
+  document.title=language==="en"
+    ?document.title.replace("Aviso de Privacidad","Privacy Notice").replace("México","Mexico")
+    :document.title.replace("Privacy Notice","Aviso de Privacidad").replace("Mexico","México");
 }
 function setLanguage(next){
   if(next!=="es"&&next!=="en")return;
   language=next;
-  try{localStorage.setItem("floreria-muniz-language",language);}catch(err){}
+  try{localStorage.setItem("floreria-muniz-language",language);}catch(error){}
   if(onChange)onChange(language);
   apply();
 }
 function init(callback){
   onChange=typeof callback==="function"?callback:null;
-  capture();
   document.querySelectorAll("[data-lang]").forEach(btn=>btn.addEventListener("click",()=>setLanguage(btn.dataset.lang)));
   let preferred="es";
-  try{preferred=localStorage.getItem("floreria-muniz-language")==="en"?"en":"es";}catch(err){}
+  try{preferred=localStorage.getItem("floreria-muniz-language")==="en"?"en":"es";}catch(error){}
   setLanguage(preferred);
+  if(window.MutationObserver){
+    observer=new MutationObserver((mutations)=>{
+      for(const m of mutations){
+        if(m.type==="characterData")translateNode(m.target);
+        else if(m.type==="attributes")translateAttrs(m.target);
+        else for(const node of m.addedNodes)scan(node);
+      }
+    });
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:attrNames});
+  }
 }
 window.siteI18n={
   init,
   setLanguage,
-  t:translated,
+  t:localized,
+  searchText(value){const raw=String(value||"");return raw+" "+(language==="en"?localized(raw):raw);},
   get lang(){return language;},
   get isEnglish(){return language==="en";}
 };
