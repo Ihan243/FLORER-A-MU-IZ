@@ -1134,8 +1134,8 @@ function show(){
   if(open||input.disabled)return;
   clearCloseTimer();
   const selected=parse(input.value);
-  viewing=asMonth(selected||today());
   focused=selected&&selectable(selected)?selected:today();
+  viewing=asMonth(focused);
   if(!selectable(focused)){
     focused=minDate();
     viewing=asMonth(focused);
@@ -1148,8 +1148,10 @@ function setDate(next){
   if(next&&!selectable(parse(next)))return;
   const before=input.value;
   input.value=next||"";
+  if(next)focused=parse(next);
   renderValue(before!==input.value);
   renderCalendar();
+  if(next)focusDay();
   textStatus(!!next);
   input.dispatchEvent(new Event("input",{bubbles:true}));
   input.dispatchEvent(new Event("change",{bubbles:true}));
