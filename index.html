@@ -156,6 +156,56 @@
 <style>
 .quote-addons{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}.quote-addons h3{margin:0;color:var(--wine);font:600 1.1rem Georgia,serif}.quote-addon-list{display:grid;gap:9px;margin-top:10px}.quote-addon{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}.quote-addon-info{display:flex;align-items:center;gap:10px;min-width:0}.quote-addon-info img{width:48px;height:48px;object-fit:cover;border-radius:8px;background:var(--rose)}.quote-addon-info strong{display:block;color:var(--ink)}.quote-addon-info small{color:var(--muted)}.quote-addon button{flex:0 0 auto;border:0;border-radius:999px;padding:8px 12px;background:var(--wine);color:#fff;font-weight:700;cursor:pointer}
 </style>
+<style id="fm-date-picker-styles">
+
+/* Florería Muñiz — animated accessible calendar, progressively enhances requested-date. */
+.fm-date-field{position:relative;min-width:0}
+.fm-native-date.fm-enhanced{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:0!important;opacity:0!important;pointer-events:none!important;overflow:hidden!important;clip-path:inset(50%)!important}
+.fm-date-picker{position:relative;width:100%}
+.fm-date-trigger{width:100%;min-height:48px;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);padding:11px 13px;cursor:pointer;transition:border-color .2s,box-shadow .2s,background .2s}
+.fm-date-trigger:hover{border-color:#bb91a0;background:#fffdfc}
+.fm-date-trigger:focus-visible{outline:3px solid #cfaeba;outline-offset:2px}
+.fm-date-trigger[aria-expanded="true"]{border-color:var(--wine);box-shadow:0 0 0 3px #65102817}
+.fm-date-icon{flex:none;width:18px;height:18px;color:var(--wine)}
+.fm-date-chevron{margin-left:auto;width:16px;height:16px;flex:none;color:var(--wine);transition:transform .25s}
+.fm-date-trigger[aria-expanded="true"] .fm-date-chevron{transform:rotate(180deg)}
+.fm-date-value{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:0;align-items:center;font-size:.93rem;font-variant-numeric:tabular-nums}
+.fm-date-value.is-empty{color:#897b7e}
+.fm-date-part{white-space:pre}
+.fm-date-hint{font-size:.75rem;color:var(--muted);margin:6px 0 0}
+.fm-calendar-popover{position:absolute;right:0;top:calc(100% + 10px);z-index:25;width:min(354px,calc(100vw - 28px));padding:17px;border:1px solid #eddbdd;border-radius:20px;background:#fffdfb;box-shadow:0 22px 65px #39101b2c;transform-origin:top right;animation:fm-calendar-enter .28s cubic-bezier(.2,.7,.2,1) both}
+.fm-calendar-popover[hidden]{display:none!important}
+@keyframes fm-calendar-enter{from{opacity:0;transform:translateY(-9px) scale(.96);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.fm-calendar-head{display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:15px}
+.fm-calendar-month{font:600 1.16rem Georgia,serif;color:var(--wine);text-align:center;flex:1;min-width:0}
+.fm-calendar-nav{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--wine);display:grid;place-items:center;cursor:pointer;font-size:1.26rem;line-height:1}
+.fm-calendar-nav:hover:not(:disabled){background:var(--rose)}
+.fm-calendar-nav:disabled{opacity:.3;cursor:not-allowed}
+.fm-calendar-week,.fm-calendar-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.fm-calendar-week{margin-bottom:6px}
+.fm-calendar-week span{text-align:center;font-size:.72rem;font-weight:700;color:#8b7078}
+.fm-calendar-days{min-height:222px}
+.fm-calendar-days.fm-moving{animation:fm-calendar-month-shift .2s cubic-bezier(.2,.7,.2,1)}
+@keyframes fm-calendar-month-shift{from{opacity:.45;transform:translateX(var(--fm-shift,7px))}to{opacity:1;transform:translateX(0)}}
+.fm-calendar-day,.fm-calendar-spacer{width:100%;aspect-ratio:1;min-width:0}
+.fm-calendar-day{border:1px solid transparent;background:transparent;border-radius:11px;font-size:.87rem;color:var(--ink);cursor:pointer;transition:background .18s,color .18s,transform .18s}
+.fm-calendar-day:hover:not(:disabled){background:var(--rose);color:var(--wine);transform:translateY(-1px)}
+.fm-calendar-day:focus-visible{outline:2px solid var(--wine);outline-offset:1px}
+.fm-calendar-day.is-today{border-color:#bd93a1;color:var(--wine);font-weight:700}
+.fm-calendar-day.is-selected,.fm-calendar-day.is-selected:hover{background:var(--wine);color:white;border-color:var(--wine);font-weight:700;box-shadow:0 4px 12px #65102833}
+.fm-calendar-day:disabled{color:#c3b5b7;cursor:not-allowed}
+.fm-calendar-footer{display:flex;align-items:center;gap:12px;justify-content:space-between;border-top:1px solid var(--line);padding-top:13px;margin-top:12px}
+.fm-calendar-actions{display:flex;gap:5px;flex:none}
+.fm-calendar-action{padding:6px 8px;border:0;border-radius:7px;background:transparent;color:var(--wine);font-size:.78rem;font-weight:700;cursor:pointer}
+.fm-calendar-action:hover:not(:disabled){background:var(--rose)}
+.fm-calendar-action:disabled{opacity:.35;cursor:not-allowed}
+.fm-calendar-status{font-size:.73rem;text-align:right;color:var(--muted);min-width:0}
+.fm-calendar-status.is-confirmed{color:var(--green);font-weight:700}
+.fm-calendar-popover:focus-within{outline:none}
+@media(max-width:650px){.fm-calendar-popover{left:0;right:auto;transform-origin:top left;width:min(354px,calc(100vw - 42px));padding:14px}.fm-calendar-day{font-size:.92rem}.fm-date-trigger{min-height:48px}}
+@media(prefers-reduced-motion:reduce){.fm-date-trigger,.fm-date-chevron,.fm-calendar-day{transition:none!important}.fm-calendar-popover,.fm-calendar-days.fm-moving{animation:none!important}}
+
+</style>
 </head>
 <body>
 <script>
@@ -921,9 +971,260 @@ window.siteI18n.init(()=>{
   if(activeView==="quote")renderQuote();
   updateShippingSummary();
   validateForm();
+  window.floralDatePicker?.syncLanguage();
 });
 updateCounts();
 loadPublicCatalogFromSupabase();
+</script>
+<script id="fm-date-picker-script">
+
+/* Accessible, dependency-free enhanced picker for the existing quote date field. */
+(()=>{
+"use strict";
+const input=document.getElementById("requested-date");
+if(!input||document.getElementById("fm-date-trigger"))return;
+const field=input.closest(".field");
+if(!field)return;
+const short=(es,en)=>window.siteI18n?.isEnglish?en:es;
+const locale=()=>window.siteI18n?.isEnglish?"en-US":"es-MX";
+const reduced=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches??false;
+const pad=n=>String(n).padStart(2,"0");
+const iso=d=>[d.getFullYear(),pad(d.getMonth()+1),pad(d.getDate())].join("-");
+const parse=str=>{
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(str||""))return null;
+  const [y,m,d]=str.split("-").map(Number);
+  const date=new Date(y,m-1,d);
+  return date.getFullYear()===y&&date.getMonth()===m-1&&date.getDate()===d?date:null;
+};
+const today=()=>new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
+const todayISO=()=>iso(today());
+const asMonth=d=>new Date(d.getFullYear(),d.getMonth(),1);
+const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const addMonths=(d,n)=>new Date(d.getFullYear(),d.getMonth()+n,1);
+const minDate=()=>parse(input.min)||today();
+const maxDate=()=>parse(input.max);
+const blocked=()=>new Set((input.dataset.disabledDates||"").split(",").map(s=>s.trim()).filter(Boolean));
+const selectable=d=>d&&iso(d)>=iso(minDate())&&(!maxDate()||iso(d)<=iso(maxDate()))&&!blocked().has(iso(d));
+const formatFull=d=>new Intl.DateTimeFormat(locale(),{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(d);
+const formatMonth=d=>new Intl.DateTimeFormat(locale(),{month:"long",year:"numeric"}).format(d);
+const fmtParts=d=>new Intl.DateTimeFormat(locale(),{day:"numeric",month:"short",year:"numeric"}).formatToParts(d);
+const svgCal='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>';
+const svgChevron='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+const root=document.createElement("div");
+root.className="fm-date-picker";
+root.innerHTML='<button type="button" id="fm-date-trigger" class="fm-date-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="fm-calendar" aria-label="Seleccionar fecha preferida"><span class="fm-date-icon">'+svgCal+'</span><span class="fm-date-value is-empty" id="fm-date-value" aria-live="polite"></span><span class="fm-date-chevron">'+svgChevron+'</span></button><div id="fm-calendar" class="fm-calendar-popover" role="dialog" aria-modal="false" aria-label="Calendario de fecha preferida" hidden><div class="fm-calendar-head"><button type="button" class="fm-calendar-nav" data-cal-nav="-1" aria-label="Mes anterior">‹</button><div class="fm-calendar-month" id="fm-calendar-month" aria-live="polite"></div><button type="button" class="fm-calendar-nav" data-cal-nav="1" aria-label="Mes siguiente">›</button></div><div class="fm-calendar-week" id="fm-calendar-week" aria-hidden="true"></div><div class="fm-calendar-days" id="fm-calendar-days" role="grid" aria-label="Días del mes"></div><div class="fm-calendar-footer"><div class="fm-calendar-actions"><button type="button" class="fm-calendar-action" data-cal-today>Hoy</button><button type="button" class="fm-calendar-action" data-cal-clear>Limpiar</button></div><span class="fm-calendar-status" id="fm-calendar-status" aria-live="polite"></span></div></div>';
+const trigger=root.querySelector("#fm-date-trigger");
+const popover=root.querySelector("#fm-calendar");
+const monthTitle=root.querySelector("#fm-calendar-month");
+const weekRow=root.querySelector("#fm-calendar-week");
+const days=root.querySelector("#fm-calendar-days");
+const status=root.querySelector("#fm-calendar-status");
+const todayBtn=root.querySelector("[data-cal-today]");
+const clearBtn=root.querySelector("[data-cal-clear]");
+const valueEl=root.querySelector("#fm-date-value");
+const caption=document.createElement("p");
+caption.className="fm-date-hint";
+caption.id="fm-date-hint";
+trigger.setAttribute("aria-describedby",caption.id);
+field.classList.add("fm-date-field");
+input.insertAdjacentElement("afterend",root);
+root.insertAdjacentElement("afterend",caption);
+const label=field.querySelector('label[for="requested-date"]');
+if(label)label.htmlFor=trigger.id;
+input.classList.add("fm-native-date","fm-enhanced");
+input.tabIndex=-1;
+input.setAttribute("aria-hidden","true");
+let open=false;
+let viewing=asMonth(parse(input.value)||today());
+let focused=parse(input.value)||today();
+let priorValue=input.value;
+let closeTimer=null;
+const partsForDate=()=>{
+  if(!parse(input.value))return [{type:"placeholder",value:short("Selecciona una fecha","Select a date")}];
+  return fmtParts(parse(input.value));
+};
+function renderValue(animate=false){
+  const previous=Array.from(valueEl.children).map(el=>el.textContent);
+  const parts=partsForDate();
+  valueEl.classList.toggle("is-empty",!input.value);
+  valueEl.replaceChildren();
+  parts.forEach((part,index)=>{
+    const span=document.createElement("span");
+    span.className="fm-date-part";
+    span.textContent=part.value;
+    valueEl.appendChild(span);
+    if(animate&&previous[index]!==part.value&&!reduced&&span.animate&&part.type!=="literal"){
+      const direction=priorValue&&input.value&&input.value<priorValue?-1:1;
+      span.animate([{opacity:0,transform:'translateY('+direction*7+'px)',filter:'blur(3px)'},{opacity:1,transform:'translateY(0)',filter:'blur(0)'}],{duration:320,easing:"cubic-bezier(.2,.7,.2,1)"});
+    }
+  });
+  const current=parse(input.value);
+  trigger.setAttribute("aria-label",current?short("Fecha preferida: ","Preferred date: ")+formatFull(current):short("Seleccionar fecha preferida","Select preferred date"));
+  priorValue=input.value;
+}
+function textStatus(confirmed=false){
+  const d=parse(input.value);
+  status.textContent=d?short("Seleccionado: ","Selected: ")+new Intl.DateTimeFormat(locale(),{day:"numeric",month:"short"}).format(d):short("Elige un día","Choose a day");
+  status.classList.toggle("is-confirmed",confirmed&&!!d);
+}
+function renderCalendar(move=0){
+  monthTitle.textContent=formatMonth(viewing);
+  const prev=addMonths(viewing,-1),next=addMonths(viewing,1);
+  root.querySelector('[data-cal-nav="-1"]').disabled=iso(new Date(prev.getFullYear(),prev.getMonth()+1,0))<iso(minDate());
+  root.querySelector('[data-cal-nav="1"]').disabled=!!maxDate()&&iso(next)>iso(maxDate());
+  const weekdays=[...Array(7)].map((_,i)=>new Intl.DateTimeFormat(locale(),{weekday:"short"}).format(new Date(2024,0,1+i)));
+  weekRow.replaceChildren(...weekdays.map(name=>{const el=document.createElement("span");el.textContent=name.replace(/\.$/,"");return el;}));
+  days.replaceChildren();
+  const offset=(viewing.getDay()+6)%7;
+  for(let i=0;i<offset;i++){
+    const blank=document.createElement("span");blank.className="fm-calendar-spacer";blank.setAttribute("role","presentation");days.appendChild(blank);
+  }
+  const count=new Date(viewing.getFullYear(),viewing.getMonth()+1,0).getDate();
+  for(let number=1;number<=count;number++){
+    const date=new Date(viewing.getFullYear(),viewing.getMonth(),number);
+    const day=iso(date);
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="fm-calendar-day";
+    button.textContent=number;
+    button.dataset.date=day;
+    button.setAttribute("role","gridcell");
+    button.setAttribute("aria-label",formatFull(date));
+    button.setAttribute("aria-selected",String(input.value===day));
+    button.disabled=!selectable(date);
+    if(day===todayISO())button.classList.add("is-today");
+    if(input.value===day)button.classList.add("is-selected");
+    button.tabIndex=day===iso(focused)&&!button.disabled?0:-1;
+    days.appendChild(button);
+  }
+  if(!days.querySelector('[data-date][tabindex="0"]:not(:disabled)')){
+    const first=days.querySelector("[data-date]:not(:disabled)");
+    if(first){first.tabIndex=0;focused=parse(first.dataset.date);}
+  }
+  if(move&&!reduced){
+    days.style.setProperty("--fm-shift",(move>0?"9px":"-9px"));
+    days.classList.remove("fm-moving");
+    void days.offsetWidth;
+    days.classList.add("fm-moving");
+  }
+  textStatus(false);
+  todayBtn.textContent=short("Hoy","Today");
+  todayBtn.disabled=!selectable(today());
+  clearBtn.textContent=short("Limpiar","Clear");
+  clearBtn.disabled=!input.value;
+  root.querySelector('[data-cal-nav="-1"]').setAttribute("aria-label",short("Mes anterior","Previous month"));
+  root.querySelector('[data-cal-nav="1"]').setAttribute("aria-label",short("Mes siguiente","Next month"));
+  popover.setAttribute("aria-label",short("Calendario de fecha preferida","Preferred date calendar"));
+  days.setAttribute("aria-label",short("Días del mes","Days of the month"));
+  caption.textContent=short("La fecha y el horario requieren confirmación por WhatsApp.","Date and time are subject to confirmation via WhatsApp.");
+}
+function focusDay(){
+  const active=days.querySelector('[data-date][tabindex="0"]:not(:disabled)');
+  (active||days.querySelector("[data-date]:not(:disabled)")||todayBtn).focus({preventScroll:true});
+}
+function clearCloseTimer(){if(closeTimer!==null){window.clearTimeout(closeTimer);closeTimer=null;}}
+function close(restoreFocus=true){
+  clearCloseTimer();
+  if(!open)return;
+  const inside=popover.contains(document.activeElement);
+  open=false;popover.hidden=true;trigger.setAttribute("aria-expanded","false");
+  if(restoreFocus&&inside)trigger.focus({preventScroll:true});
+}
+function show(){
+  if(open||input.disabled)return;
+  clearCloseTimer();
+  const selected=parse(input.value);
+  viewing=asMonth(selected||today());
+  focused=selected&&selectable(selected)?selected:today();
+  if(!selectable(focused)){
+    focused=minDate();
+    viewing=asMonth(focused);
+  }
+  renderCalendar();
+  popover.hidden=false;open=true;trigger.setAttribute("aria-expanded","true");
+  focusDay();
+}
+function setDate(next){
+  if(next&&!selectable(parse(next)))return;
+  const before=input.value;
+  input.value=next||"";
+  renderValue(before!==input.value);
+  renderCalendar();
+  textStatus(!!next);
+  input.dispatchEvent(new Event("input",{bubbles:true}));
+  input.dispatchEvent(new Event("change",{bubbles:true}));
+  clearCloseTimer();
+  closeTimer=window.setTimeout(()=>close(),next&&!reduced?300:0);
+}
+function navigateFocus(next){
+  if(!next||!selectable(next))return;
+  focused=next;
+  const newMonth=asMonth(next);
+  const delta=(newMonth.getFullYear()-viewing.getFullYear())*12+newMonth.getMonth()-viewing.getMonth();
+  viewing=newMonth;
+  renderCalendar(delta);
+  focusDay();
+}
+trigger.addEventListener("click",()=>open?close():show());
+popover.addEventListener("click",event=>{
+  const node=event.target.closest("button");
+  if(!node)return;
+  if(node.dataset.date){setDate(node.dataset.date);return;}
+  if(node.hasAttribute("data-cal-today")){setDate(todayISO());return;}
+  if(node.hasAttribute("data-cal-clear")){setDate(undefined);return;}
+  if(node.hasAttribute("data-cal-nav")){
+    const shift=Number(node.dataset.calNav);
+    viewing=addMonths(viewing,shift);
+    const priorDay=focused.getDate();
+    focused=new Date(viewing.getFullYear(),viewing.getMonth(),Math.min(priorDay,new Date(viewing.getFullYear(),viewing.getMonth()+1,0).getDate()));
+    if(!selectable(focused))focused=shift>0?minDate():new Date(viewing.getFullYear(),viewing.getMonth()+1,0);
+    renderCalendar(shift);
+    if(days.querySelector("[data-date]:not(:disabled)"))focusDay();
+  }
+});
+popover.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){event.stopPropagation();event.preventDefault();close();return;}
+  const base=parse(document.activeElement?.dataset?.date);
+  if(!base)return;
+  let target=null;
+  switch(event.key){
+    case"ArrowLeft":target=addDays(base,-1);break;
+    case"ArrowRight":target=addDays(base,1);break;
+    case"ArrowUp":target=addDays(base,-7);break;
+    case"ArrowDown":target=addDays(base,7);break;
+    case"Home":target=addDays(base,-((base.getDay()+6)%7));break;
+    case"End":target=addDays(base,6-((base.getDay()+6)%7));break;
+    case"PageUp":target=new Date(base.getFullYear(),base.getMonth()-(event.shiftKey?12:1),Math.min(base.getDate(),new Date(base.getFullYear(),base.getMonth()-(event.shiftKey?12:1)+1,0).getDate()));break;
+    case"PageDown":target=new Date(base.getFullYear(),base.getMonth()+(event.shiftKey?12:1),Math.min(base.getDate(),new Date(base.getFullYear(),base.getMonth()+(event.shiftKey?12:1)+1,0).getDate()));break;
+    default:return;
+  }
+  event.preventDefault();
+  if(selectable(target))navigateFocus(target);
+});
+trigger.addEventListener("keydown",event=>{
+  if(event.key==="ArrowDown"||event.key===" "||event.key==="Enter"){
+    if(!open){event.preventDefault();show();}
+  }else if(event.key==="Escape"&&open){event.preventDefault();close();}
+});
+document.addEventListener("pointerdown",event=>{if(open&&!root.contains(event.target))close(false);});
+document.addEventListener("keydown",event=>{if(open&&event.key==="Escape")close();});
+root.addEventListener("focusout",event=>{
+  if(open&&event.relatedTarget&&!root.contains(event.relatedTarget))close(false);
+});
+input.addEventListener("change",()=>{
+  renderValue(false);
+  if(open)renderCalendar();
+});
+function syncLanguage(){
+  renderValue(false);
+  const ownsFocus=open&&popover.contains(document.activeElement);
+  renderCalendar();
+  if(ownsFocus)focusDay();
+}
+window.floralDatePicker={syncLanguage,open:show,close,select:setDate};
+syncLanguage();
+})();
+
 </script>
 </body>
 </html>
